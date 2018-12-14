@@ -33,5 +33,6 @@ Route::group(['prefix' => 'admin'],function () {
 
     Route::group(['middleware' => 'auth:admin'],function () {
         Route::get('/','Admin\IndexController@index');
+        Route::resource('device','Admin\DeviceController');
     });
 });
