@@ -13,7 +13,7 @@ class CreateThDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('th_data', function (Blueprint $table) {
+        Schema::create('th_datas', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('device_id');
             $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
