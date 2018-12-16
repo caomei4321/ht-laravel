@@ -6,6 +6,7 @@ use App\Http\Requests\DeviceRequest;
 use App\Models\Device;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
 class DeviceController extends Controller
 {
@@ -58,9 +59,17 @@ class DeviceController extends Controller
      */
     public function show(Request $request, Device $device)
     {
-        $htData = $device->htData();
-        dd($htData);
+        $htDatas = $device->htData;
+        $htDates = [];
+        $i = 0;
+        foreach ($htDatas as $htData) {
+            $htDates[$i][0] = $htData['temperature'];
+            $htDates[$i][1] = $htData['created_at']->format('Y-m-d H:i:s');
+            $i++;
+        }
+        //dd($htDates);
         return view('admin/ht/show', [
+            'htDates' => $htDates
         ]);
     }
 

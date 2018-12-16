@@ -1157,4 +1157,5 @@ $(function () {
     funnelChart.setOption(funneloption);
     $(window).resize(funnelChart.resize);
 
+
 });
