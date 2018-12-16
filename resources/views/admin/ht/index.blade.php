@@ -69,8 +69,8 @@
                             <td class="center">4</td>
                             <td class="center">
                                 <button type="button" class="btn btn-primary btn-xs">编辑</button>
-                                <button type="button" class="btn btn-warning btn-xs">删除</button>
                                 <button type="button" class="btn btn-danger btn-xs">查看</button>
+                                <button type="button" class="btn btn-warning btn-xs">删除</button>
                             </td>
                         </tr>
                         @foreach($devices as $device)
@@ -81,8 +81,8 @@
                             <td class="center">{{ $device->address }}</td>
                             <td class="center">
                                 <a href="{{ route('device.edit',['device' => $device->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
+                                <a href="{{ route('device.show',['device' => $device->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>
                                 <button type="button" class="btn btn-warning btn-xs">删除</button>
-                                <button type="button" class="btn btn-danger btn-xs">查看</button>
                             </td>
                         </tr>
                         @endforeach

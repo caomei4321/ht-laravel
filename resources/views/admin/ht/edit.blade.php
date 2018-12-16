@@ -46,7 +46,8 @@
                 </div>
                 <div class="ibox-content">
                     <form method="POST" action="{{ route('device.update',['device' => $device->id]) }}" class="form-horizontal">
-                        {{ csrf_field('PUT') }}
+                        <input type="hidden" name="_method" value="PUT">
+                        {{ csrf_field() }}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">设备名称：</label>
 

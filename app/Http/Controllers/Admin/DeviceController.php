@@ -53,11 +53,15 @@ class DeviceController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Models\Device $device
+     * @param  \App\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function show(Device $device)
+    public function show(Request $request, Device $device)
     {
-        //
+        $htData = $device->htData();
+        dd($htData);
+        return view('admin/ht/show',[
+        ]);
     }
 
     /**
@@ -80,9 +84,15 @@ class DeviceController extends Controller
      * @param  \App\Models\Device $device
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Device $device)
+    public function update(DeviceRequest $request, Device $device)
     {
-        //
+        $device->update($request->only([
+            'name',
+            'device_no',
+            'address',
+            'remark',
+        ]));
+        return redirect()->route('device.index');
     }
 
     /**
