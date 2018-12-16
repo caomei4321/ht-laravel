@@ -60,7 +60,7 @@ class DeviceController extends Controller
     {
         $htData = $device->htData();
         dd($htData);
-        return view('admin/ht/show',[
+        return view('admin/ht/show', [
         ]);
     }
 
@@ -72,7 +72,7 @@ class DeviceController extends Controller
      */
     public function edit(Device $device)
     {
-        return view('admin/ht/edit',[
+        return view('admin/ht/edit', [
             'device' => $device
         ]);
     }
