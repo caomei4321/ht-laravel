@@ -12,8 +12,8 @@ $factory->define(App\Models\Admin::class, function (Faker $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => '43211374@qq.com',
+        'name' => 'admin',
+        'email' => '888888@qq.com',
         'password' => $password,
         'remember_token' => str_random(10),
     ];
