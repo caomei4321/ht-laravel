@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateThDataTable extends Migration
+class CreateHtDatasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateThDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('th_datas', function (Blueprint $table) {
+        Schema::create('ht_datas', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('device_id');
             $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
