@@ -60,16 +60,17 @@ class DeviceController extends Controller
     public function show(Request $request, Device $device)
     {
         $htDatas = $device->htData;
-        $htDates = [];
+        $htDates = [];  //温湿度
         $i = 0;
         foreach ($htDatas as $htData) {
-            $htDates[$i][0] = $htData['temperature'];
-            $htDates[$i][1] = $htData['created_at']->format('Y-m-d H:i:s');
+            $htDates[$i][0] = $htData['temperature'];  //温度
+            $htDates[$i][1] = $htData['humidity'];  //湿度
+            $htDates[$i][2] = $htData['created_at']->format('Y-m-d H:i:s');
             $i++;
         }
         //dd($htDates);
         return view('admin/ht/show', [
-            'htDates' => $htDates
+            'htDates' => $htDates     //温湿度
         ]);
     }
 
@@ -112,6 +113,7 @@ class DeviceController extends Controller
      */
     public function destroy(Device $device)
     {
-        //
+        $device->delete();
+        return [];
     }
 }
