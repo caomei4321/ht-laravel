@@ -116,4 +116,48 @@ class DeviceController extends Controller
         $device->delete();
         return [];
     }
+
+    /**
+     * 调用百度地图显示设备位置
+     *
+     * @param  \App\Models\Device $device
+     * @return \Illuminate\Http\Response
+     */
+    public function map(Device $device)
+    {
+        $devices = $device->all();
+        $address = [];
+        $i = 0;
+        foreach ($devices as $k) {
+            $location = $this->getLocation($k->address);
+            $address[$i]['id'] = $k->id;
+            $address[$i]['lng'] = $location->result->location->lng;
+            $address[$i]['lat'] = $location->result->location->lat;
+            $i++;
+        }
+        return view('admin/ht/map', [
+            'address' => $address
+        ]);
+    }
+
+    /**
+     * 调用百度地图获得设备经纬度
+     *
+     * @param  $address
+     * @return 位置信息的对象 $location
+     */
+    protected function getLocation($address)
+    {
+        $url = 'http://api.map.baidu.com/geocoder/v2/?address=' . $address . '&output=json&ak=F6subxg8j4A1f28mhgryfUs0dxO8PQ8o';
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);//绕过ssl验证
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+
+        $location = curl_exec($ch);
+        return json_decode($location);
+    }
 }

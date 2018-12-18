@@ -33,6 +33,8 @@ Route::group(['prefix' => 'admin'],function () {
 
     Route::group(['middleware' => 'auth:admin'],function () {
         Route::get('/','Admin\IndexController@index');
+        Route::get('/device/map','Admin\DeviceController@map')->name('device.map');
         Route::resource('device','Admin\DeviceController');
+
     });
 });

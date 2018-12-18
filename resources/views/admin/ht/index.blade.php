@@ -51,7 +51,9 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <a href="{{ route('device.create') }}"><button class="btn btn-info btn-xs " type="button"><i class="fa fa-paste"></i> 添加设备</button>
+                    <a href="{{ route('device.create') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 添加设备</button>
+                        </a>
+                    <a href="{{ route('device.map') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 设备位置分布</button>
                         </a>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
