@@ -60,7 +60,7 @@
                         <tr>
                             <th>ID</th>
                             <th>姓名</th>
-                            <th>工号</th>   
+                            <th>工号</th>
                             <th>照片地址</th>
                             <th>操作</th>
                         </tr>
