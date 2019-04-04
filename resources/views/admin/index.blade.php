@@ -83,6 +83,9 @@
                 <li>
                     <a class="J_menuItem" href="{{ route('device.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">温湿度设备管理</span></a>
                 </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('user.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">人员管理</span></a>
+                </li>
             </ul>
         </div>
     </nav>

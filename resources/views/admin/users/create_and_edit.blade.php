@@ -11,6 +11,7 @@
     <link href="{{ asset('assets/admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.css') }}" rel="stylesheet">
 
 </head>
 
@@ -40,7 +41,12 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                        <form method="post" action="{{ route('device.store') }}" class="form-horizontal">
+                        @if($user->id)
+                        <form method="POST" action="{{ route('user.update',['user'=>$user->id]) }}" class="form-horizontal" enctype="multipart/form-data">
+                        <input type="hidden" name="_method" value="PUT">
+                        @else
+                        <form method="POST" action="{{ route('user.store') }}" class="form-horizontal" enctype="multipart/form-data">
+                        @endif
                         <div class="form-group">
                             @if( count($errors) >0)
                                 @foreach($errors->all() as $error)
@@ -48,34 +54,34 @@
                                 @endforeach
                             @endif
                         </div>
+
                         {{ csrf_field() }}
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">设备名称：</label>
+                            <label class="col-sm-2 control-label">姓名：</label>
 
                             <div class="col-sm-6">
-                                <input name="name" id="name" type="text" class="form-control" value="{{ old('name') }}">
+                                <input name="name" id="name" type="text" class="form-control" value="{{ old('name',$user->name) }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">设备编号：</label>
+                            <label class="col-sm-2 control-label">工号：</label>
 
                             <div class="col-sm-10">
-                                <input type="text" id="device_no" name="device_no" class="form-control" value="{{ old('device_no') }}">
+                                <input type="text" id="device_no" name="job_number" class="form-control" value="{{ old('job_number',$user->job_number) }}">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">设备位置：</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">备注：</label>
-
-                            <div class="col-sm-10">
-                                <input type="text" id="remark" name="remark" class="form-control" value="{{ old('remark') }}">
-                            </div>
+                            <label class="col-sm-2 control-label">照片：</label>
+                            @if($user->image)
+                                <a class="fancybox" href="{{ $user->image }}" >
+                                    <img alt="image" src="{{ $user->image }}" />
+                                </a>
+                                {{--<div class="col-sm-6">--}}
+                                    {{--<img alt="image" src="{{ $user->image }}" width="200">--}}
+                                {{--</div>--}}
+                            @endif
+                            <input type="file" name="image" value="上传头像">
+                            {{--<button class="btn btn-info" type="button"><i class="fa fa-paste"></i> 上传图片</button>--}}
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -93,13 +99,15 @@
 <!-- 全局js -->
 <script src="{{ asset('assets/admin/js/jquery.min.js?v=2.1.4') }}"></script>
 <script src="{{ asset('assets/admin/js/bootstrap.min.js?v=3.3.6') }}"></script>
+<!-- Fancy box -->
+<script src="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.js') }}"></script>
 
 <!-- 自定义js -->
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
 
 <script>
     $(document).ready(function () {
-        $("#add_device").onclick(function () {
+        /*$("#add_device").onclick(function () {
             var data = {
                 'name': $("#name").value,
                 'device_no': $("#device_no").value,
@@ -107,7 +115,11 @@
                 'remark' :$("#remark").value
             };
             console.log(data);
-        })
+        })*/
+        $('.fancybox').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
     });
 </script>
 

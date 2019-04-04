@@ -26,15 +26,16 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'admin'],function () {
-    Route::get('login','Admin\Auth\LoginController@showLoginForm');
-    Route::post('login','Admin\Auth\LoginController@login')->name('admin.login');
-    Route::post('logout','Admin\Auth\LoginController@logout')->name('admin.logout');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('login', 'Admin\Auth\LoginController@showLoginForm');
+    Route::post('login', 'Admin\Auth\LoginController@login')->name('admin.login');
+    Route::post('logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
 
-    Route::group(['middleware' => 'auth:admin'],function () {
-        Route::get('/','Admin\IndexController@index');
-        Route::get('/device/map','Admin\DeviceController@map')->name('device.map');
-        Route::resource('device','Admin\DeviceController');
+    Route::group(['middleware' => 'auth:admin'], function () {
+        Route::get('/', 'Admin\IndexController@index');
+        Route::get('/device/map', 'Admin\DeviceController@map')->name('device.map');
+        Route::resource('device', 'Admin\DeviceController');
+        Route::resource('user','Admin\UsersController');
 
     });
 });

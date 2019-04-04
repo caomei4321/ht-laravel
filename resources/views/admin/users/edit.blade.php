@@ -6,6 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
+    <title>H+ 后台主题UI框架 - 基本表单</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
     <link rel="shortcut icon" href="favicon.ico"> <link href="{{ asset('assets/admin/css/bootstrap.min.css?v=3.3.6') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/font-awesome.css?v=4.4.0') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
@@ -40,41 +45,35 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                        <form method="post" action="{{ route('device.store') }}" class="form-horizontal">
-                        <div class="form-group">
-                            @if( count($errors) >0)
-                                @foreach($errors->all() as $error)
-                                    <p class="text-danger text-center">{{ $error }}</p>
-                                @endforeach
-                            @endif
-                        </div>
+                    <form method="POST" action="{{ route('device.update',['device' => $device->id]) }}" class="form-horizontal">
+                        <input type="hidden" name="_method" value="PUT">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">设备名称：</label>
 
-                            <div class="col-sm-6">
-                                <input name="name" id="name" type="text" class="form-control" value="{{ old('name') }}">
+                            <div class="col-sm-10">
+                                <input name="name" id="name" type="text" class="form-control" value="{{ old('name',$device->name) }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">设备编号：</label>
 
                             <div class="col-sm-10">
-                                <input type="text" id="device_no" name="device_no" class="form-control" value="{{ old('device_no') }}">
+                                <input type="text" id="device_no" name="device_no" class="form-control" value="{{ old('device_no',$device->device_no) }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">设备位置：</label>
 
                             <div class="col-sm-10">
-                                <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}">
+                                <input type="text" id="address" name="address" class="form-control" value="{{ old('address',$device->address) }}">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">备注：</label>
 
                             <div class="col-sm-10">
-                                <input type="text" id="remark" name="remark" class="form-control" value="{{ old('remark') }}">
+                                <input type="text" id="remark" name="remark" class="form-control" value="{{ old('remark',$device->remark) }}">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -84,7 +83,7 @@
                             </div>
                         </div>
                     </form>
-                </div>
+                <div>
             </div>
         </div>
     </div>
