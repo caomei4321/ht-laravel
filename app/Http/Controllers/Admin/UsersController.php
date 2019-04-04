@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Admin;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use  App\Models\User;
+use App\Models\User;
 use App\Handlers\ImageUploadHandler;
+use App\Http\Requests\Admin\UserRequest;
 
 class UsersController extends Controller
 {
@@ -38,12 +39,13 @@ class UsersController extends Controller
      * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, Request $request, ImageUploadHandler $uploader)
+    public function store(User $user, UserRequest $request, ImageUploadHandler $uploader)
     {
+        //dd($request->image->getClientOriginalName());
         $data = $request->all();
         if ($request->image) {
-            $fillname = 'person'.$request->job_number;
-            $result = $uploader->save($request->image,'users',$fillname);
+            //$fillname = 'person'.$request->job_number;
+            $result = $uploader->save($request->image,'users');
             if ($request) {
                 $data['image'] = $result['path'];
             }
@@ -81,12 +83,12 @@ class UsersController extends Controller
      * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ImageUploadHandler $uploader, User $user)
+    public function update(UserRequest $request, ImageUploadHandler $uploader, User $user)
     {
         $data = $request->all();
         if ($request->image) {
-            $fillname = 'person'.$request->job_number;
-            $result = $uploader->save($request->image,'users',$fillname);
+            //$fillname = 'person'.$request->job_number;
+            $result = $uploader->save($request->image,'users');
             if ($request) {
                 $data['image'] = $result['path'];
             }

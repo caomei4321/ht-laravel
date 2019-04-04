@@ -9,7 +9,7 @@ class ImageUploadHandler
     // 只允许以下后缀的图片上传
     protected $allowed_ext = ["png", "jpg", "gif", "jpeg"];
 
-    public function save($file, $folder, $filename, $file_prefix=null)
+    public function save($file, $folder, $filename = null, $file_prefix=null)
     {
         // 构建存储的文件夹规则，值如：uploads/images/avatars/201709/21/
         // 文件夹切割能让查找效率更高。
@@ -28,7 +28,8 @@ class ImageUploadHandler
         // 拼接文件名，加前缀是为了增加辨析度，前缀可以是相关数据模型的 ID
         // 值如：1_1493521050_7BVc9v9ujP.png
         if (!$filename) {
-            $filename = $file_prefix . '_' . time() . '_' . str_random(10) . '.' . $extension;
+            $filename = $file->getClientOriginalName();
+            //$filename = $file_prefix . '_' . time() . '_' . str_random(10) . '.' . $extension;
         } else {
             $filename = $filename.'.'.$extension;
         }
