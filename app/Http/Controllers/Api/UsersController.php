@@ -4,12 +4,20 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class UsersController extends Controller
 {
     public function users(User $user)
     {
-        return $user->all();
+        $users = $user->all();
+        return $this->response->array([
+            'data' => $users,
+            'success' => 1
+        ]);
+    }
+
+    public function userRecord(Request $request)
+    {
+
     }
 }

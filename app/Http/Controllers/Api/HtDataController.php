@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\HtData;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
 
 class HtDataController extends Controller
 {
