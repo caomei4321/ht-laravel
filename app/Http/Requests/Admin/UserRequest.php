@@ -34,6 +34,7 @@ class UserRequest extends FormRequest
                 {
                     return [
                         'name' => 'required',
+                        'image' => 'required|image',
                         'job_number' => 'required|unique:users,job_number'
                     ];
                 }
@@ -43,6 +44,7 @@ class UserRequest extends FormRequest
                     $id = $this->route('user')->id;
                     return [
                         'name' => 'required',
+                        'image' => 'required|image',
                         'job_number' => 'required|unique:users,job_number,'.$id
                     ];
                 }

@@ -92,6 +92,7 @@ class UsersController extends Controller
             $result = $uploader->save($request->image,'users');
             if ($request) {
                 $data['image'] = $result['path'];
+                $data['image_name'] = $result['filename'];
             }
         }
         $user->update($data);
