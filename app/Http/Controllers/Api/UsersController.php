@@ -23,7 +23,9 @@ class UsersController extends Controller
         $data['user_id'] = $user_id;
         $data['job_number'] = $request->job_number;
         UserRecord::create($data);
-        $record =  UserRecord::all();
-        return $record;
+        return $this->response()->array([
+            'status' => 1,
+            'message' => '打卡成功'
+        ]);
     }
 }
