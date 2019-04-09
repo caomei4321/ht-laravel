@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserRecords extends Model
+class UserRecord extends Model
 {
     protected $fillable = [
         'user_id', 'job_number',

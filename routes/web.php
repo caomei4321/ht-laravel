@@ -36,6 +36,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/device/map', 'Admin\DeviceController@map')->name('device.map');
         Route::resource('device', 'Admin\DeviceController');
         Route::resource('user','Admin\UsersController');
+        Route::resource('userRecord','Admin\UserRecordsController');
+        Route::post('userRecord/search','Admin\UserRecordsController@getSearch')->name('userRecord.search');
 
     });
 });

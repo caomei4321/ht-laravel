@@ -21,5 +21,6 @@ $api->version('v1', [
         return response('this is version v1');
     });
     $api->get('htData', 'HtDataController@store');
-    $api->get('users','UsersController@users');
+    $api->get('users', 'UsersController@users');
+    $api->post('userRecord', 'UsersController@userRecord');
 });
