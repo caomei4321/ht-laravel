@@ -46,11 +46,14 @@ class UsersController extends Controller
         if ($request->image) {
             //$fillname = 'person'.$request->job_number;
             $result = $uploader->save($request->image,'users');
-            if ($request) {
+            if ($result) {
                 $data['image'] = $result['path'];
                 $data['image_name'] = $result['filename'];
+            } else {
+                $data['image'] = '';
             }
         }
+        $data['password'] = bcrypt($data['password']);
         $user->create($data);
         return redirect()->route('user.index');
     }
@@ -90,10 +93,13 @@ class UsersController extends Controller
         if ($request->image) {
             //$fillname = 'person'.$request->job_number;
             $result = $uploader->save($request->image,'users');
-            if ($request) {
+            if ($result) {
                 $data['image'] = $result['path'];
                 $data['image_name'] = $result['filename'];
             }
+        }
+        if (strlen($request->password) < 60) {
+            $data['password'] = bcrypt($request->password);
         }
         $user->update($data);
         return redirect()->route('user.index');

@@ -23,4 +23,13 @@ $api->version('v1', [
     $api->get('htData', 'HtDataController@store');
     $api->get('users', 'UsersController@users');
     $api->post('userRecord', 'UsersController@userRecord');
+
+    // 登录
+    $api->post('authorizations', 'AuthorizationsController@store')
+        ->name('api.authorizations.store');
+    //刷新token
+    $api->put('authorizations/current', 'AuthorizationsController@update')
+        ->name('api.authorizations.update');
+    $api->delete('authorizations/destroy', 'AuthorizationsController@delete')
+        ->name('api.authorizations.delete');
 });

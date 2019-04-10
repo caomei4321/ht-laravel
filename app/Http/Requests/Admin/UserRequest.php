@@ -34,8 +34,10 @@ class UserRequest extends FormRequest
                 {
                     return [
                         'name' => 'required',
-                        'image' => 'required|image',
-                        'job_number' => 'required|unique:users,job_number'
+                        'image' => 'required',
+                        'job_number' => 'required|unique:users,job_number',
+                        'phone' => 'required|numeric',
+                        'password' => 'required|string|min:5'
                     ];
                 }
             case 'PUT':
@@ -44,7 +46,9 @@ class UserRequest extends FormRequest
                     $id = $this->route('user')->id;
                     return [
                         'name' => 'required',
-                        'image' => 'required|image',
+                        'image' => 'image',
+                        'phone' => 'required|numeric',
+                        'password' => 'required|string|min:5',
                         'job_number' => 'required|unique:users,job_number,'.$id
                     ];
                 }

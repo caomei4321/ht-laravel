@@ -71,6 +71,18 @@
                             </div>
                         </div>
                         <div class="form-group">
+                             <label class="col-sm-2 control-label">手机号：</label>
+                             <div class="col-sm-6">
+                                 <input name="phone" id="phone" type="text" class="form-control" value="{{ old('phone',$user->phone) }}">
+                             </div>
+                        </div>
+                        <div class="form-group">
+                             <label class="col-sm-2 control-label">密码：</label>
+                             <div class="col-sm-6">
+                                <input name="password" id="password" type="password" class="form-control" value="{{ old('passwor',$user->password) }}">
+                             </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">照片：</label>
                             @if($user->image)
                                 <a class="fancybox" href="{{ $user->image }}" >

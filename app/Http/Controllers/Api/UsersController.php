@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserRecord;
+use App\Http\Requests\Api\AuthorizationRequest;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
