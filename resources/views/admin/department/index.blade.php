@@ -51,49 +51,40 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <a href="{{ route('user.create') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 添加人员</button>
-                        </a>
-                    {{--<a href="{{ route('device.map') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 设备位置分布</button>--}}
-                        {{--</a>--}}
+                    <a href="{{ route('department.create') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 添加部门</button>
+                    </a>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>姓名</th>
-                            <th>工号</th>
-                            <th>部门</th>
-                            <th>照片地址</th>
+                            <th>部门名称</th>
+                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($users as $user)
-                        <tr class="gradeC">
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->job_number }}</td>
-                            <td>{{ $user->department['department_name'] }}</td>
-                            <td>{{ $user->image }}</td>
-                            <td class="center">
-                                <a href="{{ route('user.edit',['user' => $user->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
-                                <a href="{{ route('user.show',['user' => $user->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>
-                                <button class="btn btn-warning btn-xs delete" data-id="{{ $user->id }}">删除</button>
-                            </td>
-                        </tr>
+                        @foreach($departments as $department)
+                            <tr class="gradeC">
+                                <td>{{ $department->id }}</td>
+                                <td>{{ $department->department_name }}</td>
+                                <td class="center">{{ $department->created_at }}</td>
+                                <td class="center">
+                                    <a href="{{ route('department.edit',['department' => $department->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
+                                    <button class="btn btn-warning btn-xs delete" data-id="{{ $department->id }}">删除</button>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                         <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>姓名</th>
-                            <th>工号</th>
-                            <th>部门</th>
-                            <th>照片地址</th>
+                            <th>部门名称</th>
+                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         </tfoot>
                     </table>
-                    {{ $users->links() }}
+
                 </div>
             </div>
         </div>
@@ -136,25 +127,16 @@
             $.ajaxSetup({
                 headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type:"delete",
-                url: '/admin/user/'+id,
+                url: '/admin/department/'+id,
                 success:function (res) {
-                    console.log(res)
-                    if (res.status = 1) {
+                    if (res.status == 1) {
                         swal("删除成功！", "您已经永久删除了这条信息。", "success");
                         location.reload();
-                    } else {
-                        swal("删除失败！", "请稍后重试。", "error");
                     }
-
-
                 },
             });
             $.ajax();
         });
-    });
-    $('.dataTables-example').dataTable({
-        "lengthChange": false,
-        "paging": false
     });
 </script>
 

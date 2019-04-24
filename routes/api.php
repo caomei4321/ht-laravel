@@ -32,4 +32,7 @@ $api->version('v1', [
         ->name('api.authorizations.update');
     $api->delete('authorizations/destroy', 'AuthorizationsController@delete')
         ->name('api.authorizations.delete');
+    $api->group(['middleware' => 'auth:api'],function ($api) {
+        $api->get('userRecords','UserRecordsController@records');
+    });
 });

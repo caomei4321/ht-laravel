@@ -12,6 +12,7 @@
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/plugins/chosen/chosen.css') }}" rel="stylesheet">
 
 </head>
 
@@ -66,7 +67,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">工号：</label>
 
-                            <div class="col-sm-10">
+                            <div class="col-sm-6">
                                 <input type="text" id="device_no" name="job_number" class="form-control" value="{{ old('job_number',$user->job_number) }}">
                             </div>
                         </div>
@@ -80,6 +81,17 @@
                              <label class="col-sm-2 control-label">密码：</label>
                              <div class="col-sm-6">
                                 <input name="password" id="password" type="password" class="form-control" value="{{ old('passwor',$user->password) }}">
+                             </div>
+                        </div>
+                        <div class="form-group">
+                             <label class="col-sm-2 control-label">部门：</label>
+                             <div class="col-sm-6">
+                                 <select class="chosen-select" name="department_id" style="width: 350px;" tabindex="2" >
+                                     <option value="">请选择部门</option>
+                                     @foreach($departments as $department)
+                                     <option value="{{ $department->id }}" hassubinfo="true" @if ( $user->department_id == $department->id) selected @endif>{{ $department->department_name }}</option>
+                                     @endforeach
+                                 </select>
                              </div>
                         </div>
                         <div class="form-group">
@@ -113,6 +125,8 @@
 <script src="{{ asset('assets/admin/js/bootstrap.min.js?v=3.3.6') }}"></script>
 <!-- Fancy box -->
 <script src="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.js') }}"></script>
+<!-- Chosen -->
+<script src="{{ asset('assets/admin/js/plugins/chosen/chosen.jquery.js') }}"></script>
 
 <!-- 自定义js -->
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
@@ -132,6 +146,24 @@
             openEffect: 'none',
             closeEffect: 'none'
         });
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "95%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
     });
 </script>
 

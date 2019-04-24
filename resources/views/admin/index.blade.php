@@ -89,6 +89,9 @@
                 <li>
                     <a class="J_menuItem" href="{{ route('userRecord.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">考勤</span></a>
                 </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('department.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">部门管理</span></a>
+                </li>
             </ul>
         </div>
     </nav>

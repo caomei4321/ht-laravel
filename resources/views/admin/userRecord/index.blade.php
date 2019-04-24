@@ -25,6 +25,7 @@
 
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/plugins/chosen/chosen.css') }}" rel="stylesheet">
 
 </head>
 
@@ -65,16 +66,23 @@
                         {{ csrf_field() }}
                         <div class="input-daterange input-group" id="datepicker">
 
-                            <input type="text" class="input-sm form-control" name="start_time" value="{{ date("Y-m-d",time()) }}" />
+                            <input type="text" class="input-sm form-control" name="start_time" value="{{ isset($filter['start_time']) ? $filter['start_time'] : date("Y-m-d",time()) }}" />
                             <span class="input-group-addon">到</span>
-                            <input type="text" class="input-sm form-control" name="end_time" value="{{ date("Y-m-d",time()) }}" />
+                            <input type="text" class="input-sm form-control" name="end_time" value="{{ isset($filter['end_time']) ? $filter['end_time'] : date("Y-m-d",time()) }}" />
                             {{--<span class="input-group-addon">&nbsp&nbsp&nbsp&nbsp工号：</span>--}}
                             {{--<input type="text" name="" class="input-sm form-control" placeholder="工号">--}}
 
                         </div>
                         <div class="form-group">
                             {{--<label class="col-sm-3 control-label">文本框：</label>--}}
-                            <input type="text" name="job_number" class="input-sm form-control" placeholder="请输入工号" value="{{ old('job_number') }}">
+                            <input type="text" name="job_number" class="input-sm form-control" placeholder="请输入工号" value="{{ isset($filter['job_number']) ? $filter['job_number'] : '' }}">
+                            <select class="chosen-select" name="department_id" style="width: 350px;" tabindex="2" >
+                                <option value="">请选择部门</option>
+                                {{--{{ dd($departments) }--}}}
+                                @foreach($departments as $department)
+                                    <option value="{{ $department->id }}" hassubinfo="true" @if( $filter['department_id'] == $department->id) selected @endif>{{ $department->department_name }}</option>
+                                @endforeach
+                            </select>
                             <input type="submit" class="btn btn-primary" value="搜索">
                             {{--<button class="btn btn-primary" id="search">搜 索</button>--}}
                         </div>
@@ -89,6 +97,7 @@
                             <th>ID</th>
                             <th>姓名</th>
                             <th>工号</th>
+                            <th>部门</th>
                             <th>打卡时间</th>
                             <th>操作</th>
                         </tr>
@@ -99,6 +108,7 @@
                             <td>{{ $userRecord->id }}</td>
                             <td>{{ $userRecord->user->name }}</td>
                             <td>{{ $userRecord->job_number }}</td>
+                            <td>部门</td>
                             <td>{{ $userRecord->created_at }}</td>
                             <td class="center">
                                 <a href="{{ route('userRecord.edit',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
@@ -113,6 +123,7 @@
                             <th>ID</th>
                             <th>姓名</th>
                             <th>工号</th>
+                            <th>部门</th>
                             <th>打卡时间</th>
                             <th>操作</th>
                         </tr>
@@ -141,6 +152,8 @@
 <script src="{{ asset('assets/admin/js/plugins/sweetalert/sweetalert.min.js') }}"></script>
 <!-- Data picker -->
 <script src="{{ asset('assets/admin/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+<!-- Chosen -->
+<script src="{{ asset('assets/admin/js/plugins/chosen/chosen.jquery.js') }}"></script>
 
 <!-- 自定义js -->
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
@@ -148,41 +161,61 @@
 
 <!-- Page-Level Scripts -->
 <script>
-    $('.delete').click(function () {
-        var id = $(this).data('id');
-        console.log(id);
-        swal({
-            title: "您确定要删除这条信息吗",
-            text: "删除后将无法恢复，请谨慎操作！",
-            type: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#DD6B55",
-            confirmButtonText: "删除",
-            closeOnConfirm: false
-        }, function () {
-            $.ajaxSetup({
-                headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                type:"delete",
-                url: '/admin/user/'+id,
-                success:function (res) {
-                    console.log(res)
-                    if (res.status = 1) {
-                        swal("删除成功！", "您已经永久删除了这条信息。", "success");
-                        location.reload();
-                    } else {
-                        swal("删除失败！", "请稍后重试。", "error");
-                    }
+    $(document).ready(function () {
+        $('.delete').click(function () {
+            var id = $(this).data('id');
+            console.log(id);
+            swal({
+                title: "您确定要删除这条信息吗",
+                text: "删除后将无法恢复，请谨慎操作！",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "删除",
+                closeOnConfirm: false
+            }, function () {
+                $.ajaxSetup({
+                    headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    type:"delete",
+                    url: '/admin/user/'+id,
+                    success:function (res) {
+                        console.log(res)
+                        if (res.status = 1) {
+                            swal("删除成功！", "您已经永久删除了这条信息。", "success");
+                            location.reload();
+                        } else {
+                            swal("删除失败！", "请稍后重试。", "error");
+                        }
 
 
-                },
+                    },
+                });
+                $.ajax();
             });
-            $.ajax();
         });
-    });
-    $('#search').click(function () {
-        var start_time = $('')
+        $('#search').click(function () {
+            var start_time = $('')
+        })
+        $('#datepicker').datepicker();
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "95%"
+            }
+        }
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
     })
-    $('#datepicker').datepicker();
 </script>
 
 </body>

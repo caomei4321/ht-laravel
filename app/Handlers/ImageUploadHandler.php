@@ -9,7 +9,7 @@ class ImageUploadHandler
     // 只允许以下后缀的图片上传
     protected $allowed_ext = ["png", "jpg", "gif", "jpeg"];
 
-    public function save($file, $folder, $filename = null, $file_prefix=null)
+    public function save($file, $folder, $filename = null, $file_prefix = null)
     {
         // 构建存储的文件夹规则，值如：uploads/images/avatars/201709/21/
         // 文件夹切割能让查找效率更高。
@@ -21,7 +21,7 @@ class ImageUploadHandler
 
         // 获取文件的后缀名，因图片从剪贴板里黏贴时后缀名为空，所以此处确保后缀一直存在
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'jpg';
-        if ($extension != 'jpg') {
+        if (!in_array($extension, $this->allowed_ext)) {
             return false;
         }
 
@@ -31,7 +31,7 @@ class ImageUploadHandler
             $filename = $file->getClientOriginalName();
             //$filename = $file_prefix . '_' . time() . '_' . str_random(10) . '.' . $extension;
         } else {
-            $filename = $filename.'.'.$extension;
+            $filename = $filename . '.' . $extension;
         }
 
         // 如果上传的不是图片将终止操作

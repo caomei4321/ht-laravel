@@ -29,7 +29,7 @@ class AuthorizationsController extends Controller
     public function delete()
     {
         Auth::guard('api')->logout();
-
+        return $this->response->noContent();
     }
 
     protected function responseWithToken($token)

@@ -16,7 +16,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'password', 'image', 'job_number', 'image_name'
+        'name', 'phone', 'password', 'image', 'job_number', 'image_name', 'department_id'
     ];
 
     /**
@@ -31,6 +31,11 @@ class User extends Authenticatable implements JWTSubject
     public function user_records()
     {
         return $this->hasMany(UserRecords::class, 'user_id');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
     }
 
     public function getJWTIdentifier()

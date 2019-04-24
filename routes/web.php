@@ -38,6 +38,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('user','Admin\UsersController');
         Route::resource('userRecord','Admin\UserRecordsController');
         Route::post('userRecord/search','Admin\UserRecordsController@getSearch')->name('userRecord.search');
-
+        Route::resource('department','Admin\DepartmentsController');
     });
 });
