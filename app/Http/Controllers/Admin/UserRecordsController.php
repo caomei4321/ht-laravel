@@ -47,9 +47,10 @@ class UserRecordsController extends Controller
         //
     }
 
-    public function destroy($id)
+    public function destroy(UserRecord $record)
     {
-        //
+        $record->delete();
+        return redirect()->route('userRecord.index');
     }
 
     public function getSearch(Request $request, UserRecord $userRecord, Department $department)

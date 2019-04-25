@@ -80,7 +80,7 @@
                                 <option value="">请选择部门</option>
                                 {{--{{ dd($departments) }--}}}
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->id }}" hassubinfo="true" @if( $filter['department_id'] == $department->id) selected @endif>{{ $department->department_name }}</option>
+                                    <option value="{{ $department->id }}" hassubinfo="true" @if( isset($filter['department_id']) && $filter['department_id'] == $department->id) selected @endif>{{ $department->department_name }}</option>
                                 @endforeach
                             </select>
                             <input type="submit" class="btn btn-primary" value="搜索">
@@ -97,7 +97,7 @@
                             <th>ID</th>
                             <th>姓名</th>
                             <th>工号</th>
-                            <th>部门</th>
+                            <th>序列号</th>
                             <th>打卡时间</th>
                             <th>操作</th>
                         </tr>
@@ -108,11 +108,11 @@
                             <td>{{ $userRecord->id }}</td>
                             <td>{{ $userRecord->user->name }}</td>
                             <td>{{ $userRecord->job_number }}</td>
-                            <td>部门</td>
+                            <td>{{ $userRecord->license }}</td>
                             <td>{{ $userRecord->created_at }}</td>
                             <td class="center">
-                                <a href="{{ route('userRecord.edit',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
-                                <a href="{{ route('userRecord.show',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>
+                                {{--<a href="{{ route('userRecord.edit',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
+                                <a href="{{ route('userRecord.show',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>--}}
                                 <button class="btn btn-warning btn-xs delete" data-id="{{ $userRecord->id }}">删除</button>
                             </td>
                         </tr>
@@ -123,7 +123,7 @@
                             <th>ID</th>
                             <th>姓名</th>
                             <th>工号</th>
-                            <th>部门</th>
+                            <th>序列号</th>
                             <th>打卡时间</th>
                             <th>操作</th>
                         </tr>

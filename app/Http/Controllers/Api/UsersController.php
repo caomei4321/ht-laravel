@@ -24,6 +24,7 @@ class UsersController extends Controller
         $user_id = User::where('job_number', $request->job_number)->first()->id;
         $data['user_id'] = $user_id;
         $data['job_number'] = $request->job_number;
+        $data['license'] = $request->license;
         UserRecord::create($data);
         return $this->response()->array([
             'status' => 1,

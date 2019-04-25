@@ -63,6 +63,13 @@
                                             <input name="department_name" id="department_name" type="text" class="form-control" value="{{ old('department_name',$department->department_name) }}">
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">序列号：</label>
+
+                                        <div class="col-sm-6">
+                                            <input name="license" id="license" type="text" class="form-control" value="{{ old('license',$department->license) }}">
+                                        </div>
+                                    </div>
                                     <div class="hr-line-dashed"></div>
                                     <div class="form-group">
                                         <div class="col-sm-4 col-sm-offset-2">

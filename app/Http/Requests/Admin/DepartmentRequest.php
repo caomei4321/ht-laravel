@@ -30,7 +30,8 @@ class DepartmentRequest extends FormRequest
             case 'POST':
                 {
                     return [
-                        'department_name' => 'required'
+                        'department_name' => 'required',
+                        'license' => 'required'
                     ];
                 }
             case 'GET':

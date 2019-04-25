@@ -25,7 +25,7 @@ class DepartmentsController extends Controller
 
     public function store(DepartmentRequest $request, Department $department)
     {
-        $department->create($request->only('department_name'));
+        $department->create($request->only('department_name', 'license'));
 
         return redirect()->route('department.index');
     }
@@ -39,7 +39,7 @@ class DepartmentsController extends Controller
 
     public function update(DepartmentRequest $request, Department $department)
     {
-        $department->update($request->only('department_name'));
+        $department->update($request->only('department_name', 'license'));
 
         return redirect()->route('department.index');
     }
