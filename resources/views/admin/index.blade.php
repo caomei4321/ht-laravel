@@ -39,14 +39,14 @@
                                 </span>
                         </a>
                         <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                            <li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
+                            {{--<li><a class="J_menuItem" href="form_avatar.html">修改头像</a>
                             </li>
                             <li><a class="J_menuItem" href="profile.html">个人资料</a>
                             </li>
                             <li><a class="J_menuItem" href="contacts.html">联系我们</a>
                             </li>
                             <li><a class="J_menuItem" href="mailbox.html">信箱</a>
-                            </li>
+                            </li>--}}
                             <li class="divider"></li>
                             <li><a href="javascript:void(0)" onclick="document.getElementById('logout').submit()">安全退出</a>
                             </li>
@@ -55,7 +55,7 @@
                     <div class="logo-element">H+
                     </div>
                 </li>
-                <li>
+                {{--<li>
                     <a href="#">
                         <i class="fa fa-home"></i>
                         <span class="nav-label">主页</span>
@@ -79,7 +79,7 @@
                         </li>
                     </ul>
 
-                </li>
+                </li>--}}
                 {{--<li>
                     <a class="J_menuItem" href="{{ route('device.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">温湿度设备管理</span></a>
                 </li>--}}
@@ -108,7 +108,7 @@
                     </form>
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
-                    <li class="dropdown">
+                    {{--<li class="dropdown">
                         <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
                             <i class="fa fa-envelope"></i> <span class="label label-warning">16</span>
                         </a>
@@ -187,7 +187,7 @@
                         <a class="right-sidebar-toggle" aria-expanded="false">
                             <i class="fa fa-tasks"></i> 主题
                         </a>
-                    </li>
+                    </li>--}}
                 </ul>
             </nav>
         </div>
@@ -223,7 +223,7 @@
             <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ asset('assets/admin/index_v1.html?v=4.0') }}" frameborder="0" data-id="index_v1.html" seamless></iframe>
         </div>
         <div class="footer">
-            <div class="pull-right">&copy; 2014-2015 <a href="http://www.zi-han.net/" target="_blank">zihan's blog</a>
+            <div class="pull-right">&copy; 2019-2020 <a href="#" target="_blank">三晖科技</a>
             </div>
         </div>
     </div>
@@ -232,7 +232,7 @@
     </form>
     <!--右侧部分结束-->
     <!--右侧边栏开始-->
-    <div id="right-sidebar">
+    {{--<div id="right-sidebar">
         <div class="sidebar-container">
 
             <ul class="nav nav-tabs navs-3">
@@ -545,7 +545,7 @@
             </div>
 
         </div>
-    </div>
+    </div>--}}
     <!--右侧边栏结束-->
 </div>
 
