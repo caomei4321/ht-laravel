@@ -39,5 +39,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::resource('userRecord','Admin\UserRecordsController');
         Route::post('userRecord/search','Admin\UserRecordsController@getSearch')->name('userRecord.search');
         Route::resource('department','Admin\DepartmentsController');
+        Route::get('administrator/set','Admin\IndexController@set')->name('index.set');
+        Route::put('administrator/update/{administrator}','Admin\IndexController@update')->name('index.update');
+        Route::get('common','Admin\IndexController@common')->name('index.common');
     });
 });

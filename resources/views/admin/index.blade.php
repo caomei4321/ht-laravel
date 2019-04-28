@@ -52,7 +52,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="logo-element">H+
+                    <div class="logo-element">SH
                     </div>
                 </li>
                 {{--<li>
@@ -91,6 +91,9 @@
                 </li>
                 <li>
                     <a class="J_menuItem" href="{{ route('department.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">部门管理</span></a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('index.set') }}"><i class="fa fa-columns"></i> <span class="nav-label">系统设置</span></a>
                 </li>
             </ul>
         </div>
@@ -220,7 +223,7 @@
             <a href="javascript:void(0)" class="roll-nav roll-right J_tabExit" onclick="document.getElementById('logout').submit()"><i class="fa fa fa-sign-out"></i> 退出</a>
         </div>
         <div class="row J_mainContent" id="content-main">
-            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ asset('assets/admin/index_v1.html?v=4.0') }}" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            <iframe class="J_iframe" name="iframe0" width="100%" height="100%" src="{{ route('index.common') }}" frameborder="0" data-id="index_v1.html" seamless></iframe>
         </div>
         <div class="footer">
             <div class="pull-right">&copy; 2019-2020 <a href="#" target="_blank">三晖科技</a>
