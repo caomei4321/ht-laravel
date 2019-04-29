@@ -106,7 +106,7 @@
                         @foreach($userRecords as $userRecord)
                         <tr class="gradeC">
                             <td>{{ $userRecord->id }}</td>
-                            <td>{{ $userRecord->user->name }}</td>
+                            <td>{{ $userRecord->user['name'] }}</td>
                             <td>{{ $userRecord->job_number }}</td>
                             <td>{{ $userRecord->license }}</td>
                             <td>{{ $userRecord->created_at }}</td>
