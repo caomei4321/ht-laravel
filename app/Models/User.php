@@ -30,7 +30,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function user_records()
     {
-        return $this->hasMany(UserRecords::class, 'user_id');
+        return $this->hasMany(UserRecord::class, 'user_id');
     }
 
     public function department()

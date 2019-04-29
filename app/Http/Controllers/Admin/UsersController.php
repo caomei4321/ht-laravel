@@ -49,7 +49,12 @@ class UsersController extends Controller
 
     public function show(User $user)
     {
-        return view('admin.users.show', compact('user'));
+        $user_records = $user->user_records()->orderBy('id','desc')->get();
+        //dd($user_records);
+        return view('admin.users.show', [
+            'user' => $user,
+            'userRecords' => $user_records
+        ]);
     }
 
     public function edit(User $user, Department $department)

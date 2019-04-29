@@ -10,6 +10,7 @@
     <title>H+ 后台主题UI框架 - 百度ECHarts</title>
     <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
     <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="shortcut icon" href="{{ asset('assets/admin/favicon.ico') }}"> <link href="{{ asset('assets/admin/css/bootstrap.min.css?v=3.3.6') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/font-awesome.css?v=4.4.0') }}" rel="stylesheet">
@@ -17,6 +18,8 @@
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.css') }}" rel="stylesheet">
+    <!-- Data Tables -->
+    <link href="{{ asset('assets/admin/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
 
 </head>
 
@@ -76,6 +79,40 @@
                                     <div class="hr-line-dashed"></div>
                                 </form>
                 </div>
+                <div class="ibox-content">
+                    <h3>打卡记录</h3>
+                    {{--<a href="{{ route('device.map') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 设备位置分布</button>--}}
+                    {{--</a>--}}
+                    <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>工号</th>
+                            <th>序列号</th>
+                            <th>打卡时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($userRecords as $userRecord)
+                            <tr class="gradeC">
+                                <td>{{ $userRecord->id }}</td>
+                                <td>{{ $userRecord->job_number }}</td>
+                                <td>{{ $userRecord->license }}</td>
+                                <td>{{ $userRecord->created_at }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>ID</th>
+                            <th>工号</th>
+                            <th>序列号</th>
+                            <th>打卡时间</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                    {{--{{ $users->links() }}--}}
+                </div>
             </div>
         </div>
     </div>
@@ -83,6 +120,10 @@
 <!-- 全局js -->
 <script src="{{ asset('assets/admin/js/jquery.min.js?v=2.1.4') }}"></script>
 <script src="{{ asset('assets/admin/js/bootstrap.min.js?v=3.3.6') }}"></script>
+
+<!-- Data Tables -->
+<script src="{{ asset('assets/admin/js/plugins/dataTables/jquery.dataTables.js') }}"></script>
+<script src="{{ asset('assets/admin/js/plugins/dataTables/dataTables.bootstrap.js') }}"></script>
 
 <!-- 自定义js -->
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
@@ -106,6 +147,11 @@
         $('.fancybox').fancybox({
             openEffect: 'none',
             closeEffect: 'none'
+        });
+        $('.dataTables-example').dataTable({
+            "lengthChange": false,
+            "paging": false,
+            "order": [[ 3, 'desc' ]],
         });
     });
 </script>
