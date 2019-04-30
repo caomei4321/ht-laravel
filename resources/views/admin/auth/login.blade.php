@@ -36,7 +36,7 @@
         <form class="m-t" role="form" action="{{ route('admin.login') }}" method="post">
             {{ csrf_field() }}
             <div class="form-group">
-                <input type="email" class="form-control" placeholder="用户名" required="" name="email">
+                <input type="tel" class="form-control" placeholder="用户名" required="" name="email">
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" placeholder="密码" required="" name="password">

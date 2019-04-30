@@ -62,7 +62,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">邮箱：</label>
+                                        <label class="col-sm-2 control-label">账号：</label>
 
                                         <div class="col-sm-6">
                                             <input type="text" id="email" name="email" class="form-control" value="{{ old('job_number',$administrator->email) }}" placeholder="登录账号">

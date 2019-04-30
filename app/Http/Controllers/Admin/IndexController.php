@@ -31,7 +31,7 @@ class IndexController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|min:2',
-            'email'=> 'required|email',
+            'email'=> 'required',
             'password' => 'required|min:5',
             'company_name' => 'min:2',
         ]);

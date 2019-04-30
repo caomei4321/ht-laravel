@@ -35,21 +35,21 @@ class UserRequest extends FormRequest
                     return [
                         'name' => 'required',
                         'image' => 'required',
-                        'job_number' => 'required|unique:users,job_number',
-                        'phone' => 'required|numeric',
-                        'password' => 'required|string|min:5'
+                        //'job_number' => 'required|unique:users,job_number',
+                        //'phone' => 'required|numeric',
+                        //'password' => 'required|string|min:5'
                     ];
                 }
             case 'PUT':
             case 'PATCH':
                 {
-                    $id = $this->route('user')->id;
+                    //$id = $this->route('user')->id;
                     return [
                         'name' => 'required',
                         'image' => 'image',
-                        'phone' => 'required|numeric',
-                        'password' => 'required|string|min:5',
-                        'job_number' => 'required|unique:users,job_number,'.$id
+                        //'phone' => 'required|numeric',
+                        //'password' => 'required|string|min:5',
+                        //'job_number' => 'required|unique:users,job_number,'.$id
                     ];
                 }
             case 'GET':
@@ -65,8 +65,8 @@ class UserRequest extends FormRequest
     {
         return [
             'name.required' => '姓名不为空',
-            'job_number.required' => '工号不能为空',
-            'job_number.unique' => '当前工号已存在',
+            //'job_number.required' => '工号不能为空',
+            //'job_number.unique' => '当前工号已存在',
         ];
     }
 }
