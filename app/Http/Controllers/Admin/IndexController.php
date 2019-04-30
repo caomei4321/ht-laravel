@@ -41,7 +41,7 @@ class IndexController extends Controller
                     ->withInput();
         }
         $data = $request->all();
-        if (strlen($data['password'])<60) {
+        if (strlen($data['password'])<57) {
             $data['password'] = bcrypt( $data['password']);
         }
         $request->user()->update($data);

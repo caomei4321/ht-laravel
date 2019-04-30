@@ -14,7 +14,7 @@ class UserRecordsController extends Controller
     public function index(UserRecord $userRecord, Department $department)
     {
         //dd(Carbon::today());
-        $userRecords = $userRecord->whereDate('created_at', Carbon::today())->get();
+        $userRecords = $userRecord->whereDate('created_at', Carbon::today())->paginate(2);
         $departments = $department->all();
         return view('admin.userRecord.index', [
             'userRecords' => $userRecords,
@@ -47,10 +47,13 @@ class UserRecordsController extends Controller
         //
     }
 
-    public function destroy(UserRecord $record)
+    public function destroy(UserRecord $userRecord)
     {
-        $record->delete();
-        return redirect()->route('userRecord.index');
+        $userRecord->delete();
+        return response()->json([
+            'status' => 1,
+            'message' => '删除成功'
+        ]);
     }
 
     public function getSearch(Request $request, UserRecord $userRecord, Department $department)
@@ -67,12 +70,12 @@ class UserRecordsController extends Controller
                                         ->whereDate('created_at', '>=', $start_time)
                                         ->whereDate('created_at', '<=', $end_time)
                                         ->where('job_number', 'like', '%' . $job_number . '%')
-                                        ->get();
+                                        ->paginate(2);
         } else {
             $userRecords = $userRecord->whereDate('created_at', '>=', $start_time)
                                         ->whereDate('created_at', '<=', $end_time)
                                         ->where('job_number', 'like', '%' . $job_number . '%')
-                                        ->get();
+                                        ->paginate(2);
         }
 
         return view('admin.userRecord.index', [

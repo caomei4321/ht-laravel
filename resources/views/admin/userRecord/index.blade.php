@@ -129,7 +129,7 @@
                         </tr>
                         </tfoot>
                     </table>
-
+                    {{--{{ $userRecords->links() }}--}}
                 </div>
             </div>
         </div>
@@ -177,7 +177,7 @@
                 $.ajaxSetup({
                     headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     type:"delete",
-                    url: '/admin/user/'+id,
+                    url: '/admin/userRecord/'+id,
                     success:function (res) {
                         console.log(res)
                         if (res.status = 1) {
@@ -195,7 +195,7 @@
         });
         $('#search').click(function () {
             var start_time = $('')
-        })
+        });
         $('#datepicker').datepicker();
         var config = {
             '.chosen-select': {},
@@ -211,10 +211,14 @@
             '.chosen-select-width': {
                 width: "95%"
             }
-        }
+        };
         for (var selector in config) {
             $(selector).chosen(config[selector]);
         }
+        $('.dataTables-example').dataTable({
+            "lengthChange": false,
+            "paging": false
+        });
     })
 </script>
 
