@@ -60,10 +60,10 @@
                     {{--</div>--}}
                     {{--<a href="{{ route('user.create') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 添加人员</button>--}}
                         {{--</a>--}}
-                    <form method="post" action="{{ route('userRecord.search') }}">
+                    <form method="get" action="{{ route('userRecord.search') }}">
                     <div class="form-group form-inline row text-left" id="data_5">
                         {{--<label class="font-noraml">范围选择</label>--}}
-                        {{ csrf_field() }}
+                        {{--{{ csrf_field() }}--}}
                         <div class="input-daterange input-group" id="datepicker">
 
                             <input type="text" class="input-sm form-control" name="start_time" value="{{ isset($filter['start_time']) ? $filter['start_time'] : date("Y-m-d",time()) }}" />
@@ -129,7 +129,7 @@
                         </tr>
                         </tfoot>
                     </table>
-                    {{--{{ $userRecords->links() }}--}}
+                    {{ $userRecords->appends($filter)->links() }}
                 </div>
             </div>
         </div>

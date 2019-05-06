@@ -11,14 +11,38 @@ use Illuminate\Support\Facades\DB;
 
 class UserRecordsController extends Controller
 {
-    public function index(UserRecord $userRecord, Department $department)
+    public function index(Request $request, UserRecord $userRecord, Department $department)
     {
-        //dd(Carbon::today());
-        $userRecords = $userRecord->whereDate('created_at', Carbon::today())->get();
+        $start_time = $request->start_time ? $request->start_time : date('Y-m-d', time());
+        $end_time = $request->end_time ? $request->end_time : date('Y-m-d', time());
+        $job_number = $request->job_number ? $request->job_number : '';
+
+        if ($department_id = $request->department_id) {
+
+            $users = Db::table('users')->where('department_id', $request->department_id)->pluck('id');
+
+            $userRecords = $userRecord->whereIn('user_id', $users)
+                ->whereDate('created_at', '>=', $start_time)
+                ->whereDate('created_at', '<=', $end_time)
+                ->where('job_number', 'like', '%' . $job_number . '%')
+                ->paginate();
+        } else {
+            $userRecords = $userRecord->whereDate('created_at', '>=', $start_time)
+                ->whereDate('created_at', '<=', $end_time)
+                ->where('job_number', 'like', '%' . $job_number . '%')
+                ->paginate();
+        }
+        //$userRecords = $userRecord->whereDate('created_at', Carbon::today())->paginate(1);
         $departments = $department->all();
         return view('admin.userRecord.index', [
             'userRecords' => $userRecords,
-            'departments' => $departments
+            'departments' => $departments,
+            'filter' => [
+                'start_time' => $start_time,
+                'end_time' => $end_time,
+                'job_number' => $job_number,
+                'department_id' => $department_id
+            ]
         ]);
     }
 
@@ -56,11 +80,11 @@ class UserRecordsController extends Controller
         ]);
     }
 
-    public function getSearch(Request $request, UserRecord $userRecord, Department $department)
+    /*public function getSearch(Request $request, UserRecord $userRecord, Department $department)
     {
         $start_time = $request->start_time ? $request->start_time : '';
         $end_time = $request->end_time ? $request->end_time : date('Y-m-d', time());
-        $job_number = $request->job_number;
+        $job_number = $request->job_number ? $request->job_number : '';
 
         if ($department_id = $request->department_id) {
 
@@ -70,15 +94,15 @@ class UserRecordsController extends Controller
                                         ->whereDate('created_at', '>=', $start_time)
                                         ->whereDate('created_at', '<=', $end_time)
                                         ->where('job_number', 'like', '%' . $job_number . '%')
-                                        ->get();
+                                        ->paginate(1);
         } else {
             $userRecords = $userRecord->whereDate('created_at', '>=', $start_time)
                                         ->whereDate('created_at', '<=', $end_time)
                                         ->where('job_number', 'like', '%' . $job_number . '%')
-                                        ->get();
+                                        ->paginate(1);
         }
 
-        return view('admin.userRecord.index', [
+        return view('admin.userRecord.search', [
             'userRecords' => $userRecords,
             'departments' => $department->all(),
             'filter' => [
@@ -88,5 +112,5 @@ class UserRecordsController extends Controller
                 'department_id' => $department_id
             ]
         ]);
-    }
+    }*/
 }

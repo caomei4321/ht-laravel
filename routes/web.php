@@ -36,8 +36,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/device/map', 'Admin\DeviceController@map')->name('device.map');
         Route::resource('device', 'Admin\DeviceController');
         Route::resource('user','Admin\UsersController');
-        Route::resource('userRecord','Admin\UserRecordsController');
-        Route::post('userRecord/search','Admin\UserRecordsController@getSearch')->name('userRecord.search');
+        Route::get('userRecord','Admin\UserRecordsController@index')->name('userRecord.search');
+        Route::delete('userRecord/{userRecord}','Admin\UserRecordsController@destroy');
         Route::resource('department','Admin\DepartmentsController');
         Route::get('administrator/set','Admin\IndexController@set')->name('index.set');
         Route::put('administrator/update/{administrator}','Admin\IndexController@update')->name('index.update');
