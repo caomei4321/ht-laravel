@@ -14,7 +14,7 @@ class UserRecordsController extends Controller
     public function index(UserRecord $userRecord, Department $department)
     {
         //dd(Carbon::today());
-        $userRecords = $userRecord->whereDate('created_at', Carbon::today())->paginate(2);
+        $userRecords = $userRecord->whereDate('created_at', Carbon::today())->get();
         $departments = $department->all();
         return view('admin.userRecord.index', [
             'userRecords' => $userRecords,
@@ -70,12 +70,12 @@ class UserRecordsController extends Controller
                                         ->whereDate('created_at', '>=', $start_time)
                                         ->whereDate('created_at', '<=', $end_time)
                                         ->where('job_number', 'like', '%' . $job_number . '%')
-                                        ->paginate(2);
+                                        ->get();
         } else {
             $userRecords = $userRecord->whereDate('created_at', '>=', $start_time)
                                         ->whereDate('created_at', '<=', $end_time)
                                         ->where('job_number', 'like', '%' . $job_number . '%')
-                                        ->paginate(2);
+                                        ->get();
         }
 
         return view('admin.userRecord.index', [
