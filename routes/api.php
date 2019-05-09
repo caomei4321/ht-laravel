@@ -24,6 +24,7 @@ $api->version('v1', [
     $api->get('users', 'UsersController@users');
     $api->post('userRecord', 'UsersController@userRecord');
 
+    $api->post('test', 'UsersController@test');
     // 登录
     $api->post('authorizations', 'AuthorizationsController@store')
         ->name('api.authorizations.store');

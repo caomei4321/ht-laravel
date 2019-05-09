@@ -31,4 +31,9 @@ class UsersController extends Controller
             'message' => '打卡成功'
         ]);
     }
+
+    public function test(Request $request)
+    {
+        return $request->all();
+    }
 }
