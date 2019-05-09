@@ -87,10 +87,16 @@
                     <a class="J_menuItem" href="{{ route('user.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">人员管理</span></a>
                 </li>
                 <li>
-                    <a class="J_menuItem" href="{{ route('userRecord.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">考勤</span></a>
+                    <a class="J_menuItem" href="{{ route('userRecord.search') }}"><i class="fa fa-columns"></i> <span class="nav-label">考勤</span></a>
                 </li>
                 <li>
                     <a class="J_menuItem" href="{{ route('department.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">部门管理</span></a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('report.recordReport') }}"><i class="fa fa-columns"></i> <span class="nav-label">考勤报表</span></a>
+                </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('report.detailReport') }}"><i class="fa fa-columns"></i> <span class="nav-label">每日报表</span></a>
                 </li>
                 <li>
                     <a class="J_menuItem" href="{{ route('index.set') }}"><i class="fa fa-columns"></i> <span class="nav-label">系统设置</span></a>

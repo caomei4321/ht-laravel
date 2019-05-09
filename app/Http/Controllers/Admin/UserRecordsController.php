@@ -3,16 +3,33 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\UserRecord;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use App\Exports\UserRecordsExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class UserRecordsController extends Controller
 {
     public function index(Request $request, UserRecord $userRecord, Department $department)
-    {
+    {   //return Excel::download(new UserRecordsExport,'users.xlsx');
+        /*$workingAt = Auth::user()->working_at;
+        $userRecords = User::with(['user_records' => function ($query) {
+            //$query->count();
+            $query->whereTime('created_at','<',Auth::user()->working_at)->count();
+        }])->get(['name',]);*/
+
+        /*$userRecords = DB::table('users')->select('name')->join('user_records',function ($join) {
+            $join->on('users.id', '=', 'user_records.user_id')
+                    ->whereTime('user_records.created_at', '<', Auth::user()->working_at)
+                    ->count();
+        })->get();
+        dd($userRecords);*/
+
         $start_time = $request->start_time ? $request->start_time : date('Y-m-d', time());
         $end_time = $request->end_time ? $request->end_time : date('Y-m-d', time());
         $job_number = $request->job_number ? $request->job_number : '';

@@ -42,5 +42,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('administrator/set','Admin\IndexController@set')->name('index.set');
         Route::put('administrator/update/{administrator}','Admin\IndexController@update')->name('index.update');
         Route::get('common','Admin\IndexController@common')->name('index.common');
+
+        Route::get('recordReport','Admin\RecordReportController@recordReport')->name('report.recordReport');
+        Route::get('recordReport/download/','Admin\RecordReportController@recordReportDownload')->name('report.download');
+        Route::get('detailReport','Admin\RecordReportController@detailReport')->name('report.detailReport');
     });
 });
