@@ -142,11 +142,11 @@
             "paging": false
         });
         $('#download').click(function () {
-            $("#form").attr('action',"{{ route('report.download') }}");
+            $("#form").attr('action',"{{ route('report.detailReportDownload') }}");
             $("#form").submit();
         });
         $('#search').click(function () {
-            $("#form").attr('action',"");
+            $("#form").attr('action',"{{ route('report.detailReport') }}");
             $("#form").submit();
         })
     })

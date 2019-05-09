@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\UserRecordsExport;
+use App\Exports\DetailRecordExport;
 use App\Models\User;
 use App\Models\UserRecord;
 use Carbon\Carbon;
@@ -108,5 +109,12 @@ class RecordReportController extends Controller
             'userRecords' => $userRecords,
             'filter' => $searchDate
         ]);
+    }
+
+    //下载每日报表
+    public function detailReportDownload(Excel $excel,Request $request)
+    {
+        $searchDate = $request->search_date ? $request->search_date : date('Y-m-d',time());
+        return $excel->download(new DetailRecordExport($searchDate), '详情报表.xlsx');
     }
 }

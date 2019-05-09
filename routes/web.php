@@ -46,5 +46,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('recordReport','Admin\RecordReportController@recordReport')->name('report.recordReport');
         Route::get('recordReport/download/','Admin\RecordReportController@recordReportDownload')->name('report.download');
         Route::get('detailReport','Admin\RecordReportController@detailReport')->name('report.detailReport');
+        Route::get('detailReport/download/','Admin\RecordReportController@detailReportDownload')->name('report.detailReportDownload');
     });
 });
