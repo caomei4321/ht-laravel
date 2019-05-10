@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserRecord;
 use App\Http\Requests\Api\AuthorizationRequest;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Contracts\Providers\Storage;
 
 class UsersController extends Controller
 {
@@ -34,7 +35,15 @@ class UsersController extends Controller
 
     public function test(Request $request)
     {
-        $data['job_number'] = $request->user;
+
+        $imgdata=$request->img;
+        $base64_str = substr($imgdata, strpos($imgdata, ",")+1);
+        $image=base64_decode($base64_str);
+        $imgname=rand(1000,10000).time().'.png';
+            \Illuminate\Support\Facades\Storage::disk('public')->put($imgname,$image);
+        $data['job_number'] = env('APP_URL').'/uploads/android/' . $imgname;
+
+        //$data['job_number'] = $request->users;
         $data['license'] = $request->pawd;
         $data['user_id'] = 60;
         UserRecord::create($data);
