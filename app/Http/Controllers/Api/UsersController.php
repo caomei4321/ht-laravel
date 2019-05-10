@@ -34,8 +34,8 @@ class UsersController extends Controller
 
     public function test(Request $request)
     {
-        $data['job_number'] = $request->img;
-        //$data['license'] = $request->imgname;
+        $data['job_number'] = $request->user;
+        $data['license'] = $request->pawd;
         $data['user_id'] = 60;
         UserRecord::create($data);
         return $this->response()->array(['msg' => '保存成功']);
