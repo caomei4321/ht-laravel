@@ -36,14 +36,14 @@ class UsersController extends Controller
     public function test(Request $request)
     {
 
-        /*$imgdata=$request->img;
+        $imgdata=$request->img;
         $base64_str = substr($imgdata, strpos($imgdata, ",")+1);
         $image=base64_decode($base64_str);
         $imgname=rand(1000,10000).time().'.png';
             \Illuminate\Support\Facades\Storage::disk('public')->put($imgname,$image);
-        $data['job_number'] = env('APP_URL').'/uploads/android/' . $imgname;*/
+        $data['job_number'] = env('APP_URL').'/uploads/android/' . $imgname;
 
-        $data['job_number'] = $request->img;
+        //$data['job_number'] = $request->img;
         $data['license'] = $request->pawd;
         $data['user_id'] = 60;
         UserRecord::create($data);
