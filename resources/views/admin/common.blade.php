@@ -137,17 +137,17 @@
 <!-- Page-Level Scripts -->
 <script>
     //$(document).read(function () {
-        $("#start_work").sparkline([{{ $record['start_record'] }}, {{ $count['user_count'] }}], {
+        $("#start_work").sparkline([{{ $record['start_record'] }}, {{ $count['user_count'] - $record['start_record'] }}], {
             type: 'pie',
             height: '200',
             sliceColors: ['#1ab394', '#F5F5F5']
         });
-        $("#end_work").sparkline([{{ $record['end_record'] }}, {{ $count['user_count'] }}], {
+        $("#end_work").sparkline([{{ $record['end_record'] }}, {{ $count['user_count'] - $record['end_record'] }}], {
             type: 'pie',
             height: '200',
             sliceColors: ['#1ab394', '#F5F5F5']
         });
-    $("#late").sparkline([{{ $record['late_user'] }}, {{ $count['user_count'] }}], {
+    $("#late").sparkline([{{ $record['late_user'] }}, {{ $count['user_count'] - $record['late_user'] }}], {
         type: 'pie',
         height: '200',
         sliceColors: ['#1ab394', '#F5F5F5']

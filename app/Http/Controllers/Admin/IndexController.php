@@ -62,19 +62,25 @@ class IndexController extends Controller
                                         ->count();
 
         //当天打上班卡人数
-        $today_start_record = $userRecord->whereDate('created_at',Carbon::today())
+        $today_start_record = $userRecord->select(DB::raw('count(*) as user_count, user_id'))
+                                         ->whereDate('created_at',Carbon::today())
                                          ->whereTime('created_at','<','12:00:00')
-                                         ->count();
+                                         ->groupBy('user_id')
+                                         ->get()->count();
         //下班卡人数
-        $today_end_record = $userRecord->whereDate('created_at',Carbon::today())
+        $today_end_record = $userRecord->select(DB::raw('count(*) as user_count, user_id'))
+                                        ->whereDate('created_at',Carbon::today())
                                         ->whereTime('created_at','>','12:00:00')
-                                        ->count();
+                                        ->groupBy('user_id')
+                                        ->get()->count();
 
         //当天迟到人数
-        $today_late_user = $userRecord->whereDate('created_at',Carbon::today())
+        $today_late_user = $userRecord->select(DB::raw('count(*) as user_count, user_id'))
+                                        ->whereDate('created_at',Carbon::today())
                                         ->whereTime('created_at','>',Auth::user()->woking_at)
                                         ->whereTime('created_at','<','12:00:00')
-                                        ->count();
+                                        ->groupBy('user_id')
+                                        ->get()->count();
         //本月出勤
         /*$aa = DB::table('user_records')->whereDate('created_at','>=',Carbon::now()->startOfMonth())
                                         ->groupBy('date')
