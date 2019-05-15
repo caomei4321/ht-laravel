@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('', function () {
+    return redirect()->route('admin.index');
 });
 
 /*Route::namespace('Admin')->group(function () {
@@ -27,7 +27,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
-    Route::get('login', 'Admin\Auth\LoginController@showLoginForm');
+    Route::get('login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.index');
     Route::post('login', 'Admin\Auth\LoginController@login')->name('admin.login');
     Route::post('logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
 
