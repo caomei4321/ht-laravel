@@ -31,7 +31,8 @@ class DepartmentRequest extends FormRequest
                 {
                     return [
                         'department_name' => 'required',
-                        'license' => 'required'
+                        'license' => 'required',
+                        'company_id' => ''
                     ];
                 }
             case 'GET':

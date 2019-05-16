@@ -83,6 +83,19 @@
                                 <input name="password" id="password" type="password" class="form-control" value="{{ old('passwor',$user->password) }}">
                              </div>
                         </div>
+                        @role('administrator')
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">公司：</label>
+                            <div class="col-sm-6">
+                                <select class="chosen-select" name="company_id" style="width: 350px;" tabindex="2" >
+                                    <option value="">请选择公司</option>
+                                    @foreach($companies as $company)
+                                        <option value="{{ $company->id }}" hassubinfo="true" @if ( $user->company_id == $company->id) selected @endif>{{ $company->company_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endrole
                         <div class="form-group">
                              <label class="col-sm-2 control-label">部门：</label>
                              <div class="col-sm-6">

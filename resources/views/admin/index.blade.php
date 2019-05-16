@@ -101,6 +101,20 @@
                 <li>
                     <a class="J_menuItem" href="{{ route('index.set') }}"><i class="fa fa-columns"></i> <span class="nav-label">系统设置</span></a>
                 </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('admin.company.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">公司管理</span></a>
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-table"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li><a class="J_menuItem" href="{{ route('admin.administrators.index') }}">管理员</a>
+                        </li>
+                        <li><a class="J_menuItem" href="{{ route('admin.roles.index') }}">角色</a>
+                        </li>
+                        <li><a class="J_menuItem" href="{{ route('admin.permissions.index') }}">权限</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </nav>
