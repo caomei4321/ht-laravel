@@ -21,7 +21,7 @@ class CompanyController extends Controller
 
     public function store(Request $request, Company $company)
     {
-        $company->create($request->only(['company_name', 'working_at', 'end_at']));
+        $company->create($request->only(['company_name']));
         return redirect()->route('admin.company.index');
     }
 
@@ -43,7 +43,7 @@ class CompanyController extends Controller
 
     public function update(Request $request, Company $company)
     {
-        $company->update($request->only(['company_name','working_at','end_at']));
+        $company->update($request->only(['company_name']));
         return redirect()->route('admin.company.index');
     }
 

@@ -12,6 +12,7 @@
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/plugins/chosen/chosen.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/plugins/clockpicker/clockpicker.css') }}" rel="stylesheet">
 
 </head>
 
@@ -89,6 +90,20 @@
                                         </div>
                                     </div>
                                     @endrole
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">上班时间：</label>
+
+                                        <div class="col-sm-6 clockpicker" data-autoclose="true">
+                                            <input type="text" name="working_at" class="form-control" value="{{ old('working_at',$department->working_at) }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">下班时间：</label>
+
+                                        <div class="col-sm-6 clockpicker" data-autoclose="true">
+                                            <input type="text" name="end_at" class="form-control" value="{{ old('end_at',$department->end_at) }}">
+                                        </div>
+                                    </div>
                                     <div class="hr-line-dashed"></div>
                                     <div class="form-group">
                                         <div class="col-sm-4 col-sm-offset-2">
@@ -109,6 +124,8 @@
 <script src="{{ asset('assets/admin/js/plugins/chosen/chosen.jquery.js') }}"></script>
 <!-- 自定义js -->
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
+<!-- Clock picker -->
+<script src="{{ asset('assets/admin/js/plugins/clockpicker/clockpicker.js') }}"></script>
 
 <script>
     $(document).ready(function () {
@@ -135,10 +152,11 @@
             '.chosen-select-width': {
                 width: "95%"
             }
-        }
+        };
         for (var selector in config) {
             $(selector).chosen(config[selector]);
         }
+        $('.clockpicker').clockpicker();
     });
 </script>
 

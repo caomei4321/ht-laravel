@@ -34,23 +34,28 @@ class UserRecordsController extends Controller
         $end_time = $request->end_time ? $request->end_time : date('Y-m-d', time());
         $job_number = $request->job_number ? $request->job_number : '';
 
-        if ($department_id = $request->department_id) {
 
-            $users = Db::table('users')->where('department_id', $request->department_id)->pluck('id');
+        if ($request->user()->hasRole('administrator')) {
+            $departments = $department->all();
+        } elseif ($request->user()->hasRole('company_manage')) {
+            $departments = $department->where('company_id', $request->user()->company_id)->get();
+        }
 
-            $userRecords = $userRecord->whereIn('user_id', $users)
-                ->whereDate('created_at', '>=', $start_time)
-                ->whereDate('created_at', '<=', $end_time)
-                ->where('job_number', 'like', '%' . $job_number . '%')
-                ->paginate();
-        } else {
-            $userRecords = $userRecord->whereDate('created_at', '>=', $start_time)
-                ->whereDate('created_at', '<=', $end_time)
-                ->where('job_number', 'like', '%' . $job_number . '%')
-                ->paginate();
+        if ($department_id = $request->department_id) {  //提交部门参数时按部门 ID 查询
+
+            $users = Db::table('users')->where('department_id', $department_id)->pluck('id');
+
+        } else {  //查询当前用户公司所有员工记录
+            $users = Db::table('users')->where('company_id', $request->user()->company_id)->pluck('id');
+
         }
         //$userRecords = $userRecord->whereDate('created_at', Carbon::today())->paginate(1);
-        $departments = $department->all();
+        $userRecords = $userRecord->whereIn('user_id', $users)
+            ->whereDate('created_at', '>=', $start_time)
+            ->whereDate('created_at', '<=', $end_time)
+            ->where('job_number', 'like', '%' . $job_number . '%')
+            ->paginate();
+
         return view('admin.userRecord.index', [
             'userRecords' => $userRecords,
             'departments' => $departments,
@@ -130,4 +135,9 @@ class UserRecordsController extends Controller
             ]
         ]);
     }*/
+
+    public function search()
+    {
+
+    }
 }

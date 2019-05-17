@@ -59,6 +59,8 @@
                             <th>ID</th>
                             <th>部门名称</th>
                             <th>添加时间</th>
+                            <th>上班时间</th>
+                            <th>下班时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -68,6 +70,8 @@
                                 <td>{{ $department->id }}</td>
                                 <td>{{ $department->department_name }}</td>
                                 <td class="center">{{ $department->created_at }}</td>
+                                <td class="center">{{ $department->working_at }}</td>
+                                <td class="center">{{ $department->end_at }}</td>
                                 <td class="center">
                                     <a href="{{ route('department.edit',['department' => $department->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
                                     <button class="btn btn-warning btn-xs delete" data-id="{{ $department->id }}">删除</button>
@@ -80,6 +84,8 @@
                             <th>ID</th>
                             <th>部门名称</th>
                             <th>添加时间</th>
+                            <th>上班时间</th>
+                            <th>下班时间</th>
                             <th>操作</th>
                         </tr>
                         </tfoot>

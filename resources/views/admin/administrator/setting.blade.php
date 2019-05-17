@@ -80,11 +80,11 @@
                                             <input name="company_name" id="company_name" type="text" class="form-control" value="{{ old('passwor',$administrator->company_name) }}">
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    {{--<div class="form-group">
                                         <label class="col-sm-2 control-label">上班时间：</label>
-                                        {{--<div class="col-sm-6">
+                                        --}}{{--<div class="col-sm-6">
                                             <input name="working_at" id="working_at" type="text" class="form-control" value="{{ old('working_at',$user->working_at) }}">
-                                        </div>--}}
+                                        </div>--}}{{--
                                         <div class="col-sm-6 clockpicker" data-autoclose="true">
                                             <input type="text" class="form-control" name="working_at" value="{{ old('working_at',$administrator->working_at) }}">
                                             <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
@@ -96,7 +96,7 @@
                                             <input type="text" class="form-control" name="end_at" value="{{ old('end_at',$administrator->end_at) }}">
                                             <span class="input-group-addon"><span class="fa fa-clock-o"></span></span>
                                         </div>
-                                    </div>
+                                    </div>--}}
                                     <div class="hr-line-dashed"></div>
                                     <div class="form-group">
                                         <div class="col-sm-4 col-sm-offset-2">

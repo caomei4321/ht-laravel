@@ -58,6 +58,9 @@ class UsersController extends Controller
             }
         }
         $data['password'] = bcrypt($data['password']);
+        if (!$request->user()->hasRole('administrator')) {
+            $data['company_id'] = $request->user()->company_id;
+        }
         $user->create($data);
         return redirect()->route('user.index');
     }

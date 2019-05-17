@@ -11,7 +11,6 @@
     <link href="{{ asset('assets/admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
-    <link href="{{ asset('assets/admin/css/plugins/clockpicker/clockpicker.css') }}" rel="stylesheet">
 
 </head>
 
@@ -66,20 +65,6 @@
                                     <input name="company_name" type="text" class="form-control" value="{{ old('company_name',$company->company_name) }}">
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">上班时间：</label>
-
-                                <div class="col-sm-6 clockpicker" data-autoclose="true">
-                                    <input type="text" name="working_at" class="form-control" value="{{ old('working_at',$company->working_at) }}">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">下班时间：</label>
-
-                                <div class="col-sm-6 clockpicker" data-autoclose="true">
-                                    <input type="text" name="end_at" class="form-control" value="{{ old('end_at',$company->end_at) }}">
-                                </div>
-                            </div>
                             <div class="hr-line-dashed"></div>
                             <div class="form-group">
                                 <div class="col-sm-4 col-sm-offset-2">
@@ -95,12 +80,8 @@
     <!-- 全局js -->
     <script src="{{ asset('assets/admin/js/jquery.min.js?v=2.1.4') }}"></script>
     <script src="{{ asset('assets/admin/js/bootstrap.min.js?v=3.3.6') }}"></script>
-    <!-- Clock picker -->
-    <script src="{{ asset('assets/admin/js/plugins/clockpicker/clockpicker.js') }}"></script>
     <script>
-        $(document).ready(function () {
-            $('.clockpicker').clockpicker();
-        });
+
     </script>
 </body>
 

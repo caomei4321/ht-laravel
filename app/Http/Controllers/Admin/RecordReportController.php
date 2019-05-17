@@ -72,7 +72,12 @@ class RecordReportController extends Controller
     {
         $searchDate = $request->search_date ? $request->search_date : date('Y-m-d',time());
 
-        $userRecords = $user->all();
+        if ($request->user()->hasRole('administrator')) {
+            $userRecords = $user->all();
+        } else {
+            $userRecords = $user->where('company_id',$request->user()->company_id)->get();
+        }
+
 
         foreach ($userRecords as $userRecord) {
             $work_at = $userRecord->user_records()
@@ -94,6 +99,8 @@ class RecordReportController extends Controller
             if (isset($endwork_at)) {
                 $userRecord->endwork_at = $endwork_at->created_at; //下班打卡时间
 
+
+                dd($userRecord->department->end_at);
                 //计算加班时长
                 $endAt = Auth::user()->end_at;
                 $min = (strtotime(date('H:i:00', strtotime($endwork_at->created_at))) - strtotime($endAt)) / 60;

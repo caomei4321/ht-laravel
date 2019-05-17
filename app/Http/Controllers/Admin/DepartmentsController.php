@@ -20,7 +20,7 @@ class DepartmentsController extends Controller
         }
 
         return view('admin.department.index', [
-            'departments' => $department->all(),
+            'departments' => $departmets,
         ]);
     }
 
@@ -38,11 +38,13 @@ class DepartmentsController extends Controller
 
         //dd($request->all());
         if ($request->user()->hasRole('administrator')) {
-            $department->create($request->only('department_name', 'license', 'company_id'));
+            $department->create($request->only('department_name', 'license', 'company_id', 'working_at', 'end_at'));
         } else {
             $department->create([
                 'department_name' => $request->department_name,
                 'license' => $request->license,
+                'working_at' => $request->working_at,
+                'end_at' => $request->end_at,
                 'company_id' => $request->user()->company_id
             ]);
         }
@@ -62,7 +64,7 @@ class DepartmentsController extends Controller
     public function update(DepartmentRequest $request, Department $department)
     {
         $this->authorize('own', $department);
-        $department->update($request->only('department_name', 'license'));
+        $department->update($request->only('department_name', 'license', 'company_id', 'working_at', 'end_at'));
 
         return redirect()->route('department.index');
     }

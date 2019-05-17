@@ -51,8 +51,6 @@
                             <th>ID</th>
                             <th>公司名称</th>
                             <th>添加时间</th>
-                            <th>上班时间</th>
-                            <th>下班时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -62,8 +60,6 @@
                                 <td>{{ $company->id }}</td>
                                 <td>{{ $company->company_name }}</td>
                                 <td>{{ $company->created_at }}</td>
-                                <td>{{ $company->working_at }}</td>
-                                <td>{{ $company->end_at }}</td>
                                 <td class="center">
                                     <a href="{{ route('admin.company.edit',['company' => $company->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
                                     <a href="{{ route('admin.company.show',['administrator' => $company->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>
@@ -77,8 +73,6 @@
                             <th>ID</th>
                             <th>公司名称</th>
                             <th>添加时间</th>
-                            <th>上班时间</th>
-                            <th>下班时间</th>
                             <th>操作</th>
                         </tr>
                         </tfoot>
