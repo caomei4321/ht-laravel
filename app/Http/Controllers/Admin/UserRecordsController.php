@@ -33,6 +33,8 @@ class UserRecordsController extends Controller
         $start_time = $request->start_time ? $request->start_time : date('Y-m-d', time());
         $end_time = $request->end_time ? $request->end_time : date('Y-m-d', time());
         $job_number = $request->job_number ? $request->job_number : '';
+        $department_id = $request->department_id ? $request->department_id : '';
+        $times = $request->times ? $request->times : '';
 
 
         if ($request->user()->hasRole('administrator')) {
@@ -41,7 +43,7 @@ class UserRecordsController extends Controller
             $departments = $department->where('company_id', $request->user()->company_id)->get();
         }
 
-        if ($department_id = $request->department_id) {  //提交部门参数时按部门 ID 查询
+        if ($department_id) {  //提交部门参数时按部门 ID 查询
 
             $users = Db::table('users')->where('department_id', $department_id)->pluck('id');
 
@@ -50,11 +52,27 @@ class UserRecordsController extends Controller
 
         }
         //$userRecords = $userRecord->whereDate('created_at', Carbon::today())->paginate(1);
-        $userRecords = $userRecord->whereIn('user_id', $users)
-            ->whereDate('created_at', '>=', $start_time)
-            ->whereDate('created_at', '<=', $end_time)
-            ->where('job_number', 'like', '%' . $job_number . '%')
-            ->paginate();
+        if ($times == 1) { //查询上午打卡记录
+            $userRecords = $userRecord->whereIn('user_id', $users)
+                ->whereDate('created_at', '>=', $start_time)
+                ->whereDate('created_at', '<=', $end_time)
+                ->where('job_number', 'like', '%' . $job_number . '%')
+                ->whereTime('created_at', '<=', '12:00:00')
+                ->paginate();
+        } elseif ($times == 2) {  //查询下午打卡记录
+            $userRecords = $userRecord->whereIn('user_id', $users)
+                ->whereDate('created_at', '>=', $start_time)
+                ->whereDate('created_at', '<=', $end_time)
+                ->where('job_number', 'like', '%' . $job_number . '%')
+                ->whereTime('created_at', '>', '12:00:00')
+                ->paginate();
+        } else {
+            $userRecords = $userRecord->whereIn('user_id', $users)
+                ->whereDate('created_at', '>=', $start_time)
+                ->whereDate('created_at', '<=', $end_time)
+                ->where('job_number', 'like', '%' . $job_number . '%')
+                ->paginate();
+        }
 
         return view('admin.userRecord.index', [
             'userRecords' => $userRecords,
@@ -63,34 +81,10 @@ class UserRecordsController extends Controller
                 'start_time' => $start_time,
                 'end_time' => $end_time,
                 'job_number' => $job_number,
-                'department_id' => $department_id
+                'department_id' => $department_id,
+                'times' => $times
             ]
         ]);
-    }
-
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     public function destroy(UserRecord $userRecord)

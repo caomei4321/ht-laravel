@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Models\Admin;
 
 class AdminTableSeeder extends Seeder
 {
@@ -13,8 +14,10 @@ class AdminTableSeeder extends Seeder
     {
         factory(App\Models\Admin::class, 1)->create([
             'name' => 'cm',
-            'email' => '43211374@qq.com',
+            'email' => 'admin',
             'password' => bcrypt('admin')
         ]);
+        $administrator = Admin::find(1);
+        $administrator->assignRole('administrator');
     }
 }

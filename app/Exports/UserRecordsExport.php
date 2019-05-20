@@ -11,10 +11,13 @@ class UserRecordsExport implements FromView
 {
     protected $startTime;
     protected $endTime;
-    public function __construct($startTime,$endTime)
+    protected $companyId;
+
+    public function __construct($startTime, $endTime, $companyId = nul)
     {
         $this->startTime = $startTime;
         $this->endTime = $endTime;
+        $this->companyId = $companyId;
     }
 
     /**
@@ -29,40 +32,65 @@ class UserRecordsExport implements FromView
         return $userRecords;
         //$userRecord = $this->record->where()
     }*/
-    public function view(): view
+    public
+    function view(): view
     {
         $startTime = $this->startTime;
         $endTime = $this->endTime;
         //$startTime = $request->start_time ? $request->start_time : date('Y-m-01', strtotime(date("Y-m-d")));
         //$endTime = $request->end_time ? $request->end_time : date('Y-m-d', time());
-        $workingAt = Auth::user()->working_at;
-        $endAt = Auth::user()->end_at;
-        $userRecords = User::all();
+        if ($this->companyId) {
+            $userRecords = User::where('company_id', $this->companyId)->get();
+        } else {
+            $userRecords = User::all();
+        }
+        //$userRecords = User::all();
         foreach ($userRecords as $userRecord) {
+            $department = $userRecord->department()->first();
+
+            $workingAt = $department['working_at'];  //用户所在部门的上班时间
+            $endAt = $department['end_at'];  //用户所在部门的下班时间
+
+            $over = date('H:i:s', strtotime("+1 hours", strtotime($endAt)));  //开始算加班时间（下班时间一小时以后开始算加班）
+
             //迟到次数
             $userRecord->lateCount = $userRecord->user_records()
                 ->whereDate('created_at', '>=', $startTime)
                 ->whereDate('created_at', '<=', $endTime)
                 ->whereTime('created_at', '<', '12:00:00')
                 ->whereTime('created_at', '>', $workingAt)
-                ->count();
+                ->selectRaw('DATE(created_at) as date,COUNT(*) as value')
+                ->groupBy('date')
+                ->get();
+            $userRecord->lateCount = count($userRecord->lateCount); //迟到次数
+
+            $over = date('H:i:s', strtotime("+1 hours", strtotime($endAt)));  //开始算加班时间（下班时间一小时以后开始算加班）
             //加班次数
-            $userRecord->overtimeCount = $userRecord->user_records()
+            $overtimeCounts = $userRecord->user_records()
                 ->whereDate('created_at', '>=', $startTime)
                 ->whereDate('created_at', '<=', $endTime)
-                ->whereTime('created_at','>','16:30:00')
-                ->count();
+                ->whereTime('created_at', '>=', $over)
+                ->selectRaw('DATE(created_at) as date,COUNT(*) as value')
+                ->groupBy('date')->get();
+
             $overTimes = 0; //加班时长
-            $userOvertimes = $userRecord->user_records()
+            /*$userOvertimes = $userRecord->user_records()
                 ->whereDate('created_at', '>=', $startTime)
                 ->whereDate('created_at', '<=', $endTime)
-                ->whereTime('created_at', '>', '16:30:00')->get();
-            foreach ($userOvertimes as $userOvertime) {
+                ->whereTime('created_at', '>=', $over)->get();*/
+            foreach ($overtimeCounts as $overtimeCount) {
+                $userOvertime = $userRecord->user_records()
+                    ->whereDate('created_at', $overtimeCount['date'])
+                    ->orderBy('created_at', 'desc')
+                    ->first();
+
                 $min = (strtotime(date('H:i:00', strtotime($userOvertime->created_at))) - strtotime($endAt)) / 60;
                 $overTimes = $overTimes + $min;
             }
             //加班时长
-            $userRecord->overTimes = $overTimes;
+            $userRecord->overTime = $overTimes;
+            //加班次数
+            $userRecord->overtimeCount = count($overtimeCounts);
         }
 
         return view('admin.recordReport.index', [

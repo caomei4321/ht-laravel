@@ -74,12 +74,6 @@
                                             <input name="password" id="password" type="password" class="form-control" value="{{ old('phone',$administrator->password) }}">
                                         </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="col-sm-2 control-label">公司名称：</label>
-                                        <div class="col-sm-6">
-                                            <input name="company_name" id="company_name" type="text" class="form-control" value="{{ old('passwor',$administrator->company_name) }}">
-                                        </div>
-                                    </div>
                                     {{--<div class="form-group">
                                         <label class="col-sm-2 control-label">上班时间：</label>
                                         --}}{{--<div class="col-sm-6">

@@ -33,7 +33,6 @@ class IndexController extends Controller
             'name' => 'required|min:2',
             'email'=> 'required',
             'password' => 'required|min:5',
-            'company_name' => 'min:2',
         ]);
         if ($validator->fails()) {
             return redirect()->route('index.set')

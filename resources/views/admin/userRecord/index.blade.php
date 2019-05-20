@@ -76,12 +76,18 @@
                         <div class="form-group">
                             {{--<label class="col-sm-3 control-label">文本框：</label>--}}
                             <input type="text" name="job_number" class="input-sm form-control" placeholder="请输入工号" value="{{ isset($filter['job_number']) ? $filter['job_number'] : '' }}">
-                            <select class="chosen-select" name="department_id" style="width: 350px;" tabindex="2" >
+                            <select class="chosen-select" name="department_id" style="width: 200px;" tabindex="2" >
                                 <option value="">请选择部门</option>
                                 {{--{{ dd($departments) }--}}}
                                 @foreach($departments as $department)
-                                    <option value="{{ $department->id }}" hassubinfo="true" @if( isset($filter['department_id']) && $filter['department_id'] == $department->id) selected @endif>{{ $department->department_name }}</option>
+                                    <option value="{{ $department->id }}" hassubinfo="true" @if( $filter['department_id'] == $department->id) selected @endif>{{ $department->department_name }}</option>
                                 @endforeach
+                            </select>
+                            <select class="chosen-select" name="times" style="width: 200px;" tabindex="2" >
+                                <option value="">请选择时间段</option>
+                                {{--{{ dd($departments) }--}}}
+                                <option value="1" @if( $filter['times'] == 1) selected @endif>上午</option>
+                                <option value="2" @if( $filter['times'] == 2) selected @endif>下午</option>
                             </select>
                             <input type="submit" class="btn btn-primary" value="搜索">
                             {{--<button class="btn btn-primary" id="search">搜 索</button>--}}
