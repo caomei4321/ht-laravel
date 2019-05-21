@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Company;
-use DemeterChain\C;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Department;

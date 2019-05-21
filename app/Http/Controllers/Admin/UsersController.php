@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Company;
 use App\Models\Department;
+use App\Models\Device;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,17 +30,19 @@ class UsersController extends Controller
         ]);
     }
 
-    public function create(User $user, Department $department, Company $company, UserRequest $request)
+    public function create(User $user, Department $department, Device $device, UserRequest $request)
     {
         //$this->authorize('own', $user);
         //if ($request->user()->hasRole('administrator')) {
         //    $departments = $department->where('company_id',$request->user()->company_id)->get();
         //}
+        $departments = $department->where('company_id',$request->user()->company_id)->get();
+        $devices = $device->where('company_id',$request->user()->company_id)->get();
 
         return view('admin.users.create_and_edit', [
             'user' => $user,
-            'departments' => $department->all(),
-            'companies'  => $company->all()
+            'departments' => $departments,
+            'device' => $devices
         ]);
     }
 
@@ -62,6 +65,7 @@ class UsersController extends Controller
             $data['company_id'] = $request->user()->company_id;
         }
         $user->create($data);
+        $user->device()->attach($data['device']);
         return redirect()->route('user.index');
     }
 
@@ -75,12 +79,15 @@ class UsersController extends Controller
         ]);
     }
 
-    public function edit(User $user, Department $department, Company $company)
+    public function edit(User $user, Department $department, Company $company, UserRequest $request)
     {
+        $departments = $department->where('company_id',$request->user()->company_id)->get();
+        $userDevice = $user->device()->get();
+        
         return view('admin.users.create_and_edit', [
             'user' => $user,
-            'companies' => $company->all(),
-            'departments' => $department->all()
+            'departments' => $departments,
+            'user_device' => $userDevice
         ]);
     }
 
@@ -99,6 +106,7 @@ class UsersController extends Controller
             $data['password'] = bcrypt($request->password);
         }
         $user->update($data);
+        $user->device()->sync($data['device']);
         return redirect()->route('user.index');
     }
 

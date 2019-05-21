@@ -53,15 +53,15 @@
                 <div class="ibox-content">
                     <a href="{{ route('device.create') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 添加设备</button>
                         </a>
-                    <a href="{{ route('device.map') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 设备位置分布</button>
-                        </a>
+                    {{--<a href="{{ route('device.map') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 设备位置分布</button>
+                        </a>--}}
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>设备名称</th>
                             <th>设备编号</th>
-                            <th>设备位置</th>
+                            <th>备注</th>
+                            <th>公司</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -69,12 +69,12 @@
                         @foreach($devices as $device)
                         <tr class="gradeC">
                             <td>{{ $device->id }}</td>
-                            <td>{{ $device->name }}</td>
                             <td>{{ $device->device_no }}</td>
-                            <td class="center">{{ $device->address }}</td>
+                            <td>{{ $device->remark }}</td>
+                            <td class="center">{{ $device->company['company_name'] }}</td>
                             <td class="center">
                                 <a href="{{ route('device.edit',['device' => $device->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
-                                <a href="{{ route('device.show',['device' => $device->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>
+                                {{--<a href="{{ route('device.show',['device' => $device->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>--}}
                                 <button class="btn btn-warning btn-xs delete" data-id="{{ $device->id }}">删除</button>
                             </td>
                         </tr>
@@ -83,9 +83,9 @@
                         <tfoot>
                         <tr>
                             <th>ID</th>
-                            <th>设备名称</th>
                             <th>设备编号</th>
-                            <th>设备位置</th>
+                            <th>备注</th>
+                            <th>公司</th>
                             <th>操作</th>
                         </tr>
                         </tfoot>
@@ -120,7 +120,7 @@
 <script>
     $('.delete').click(function () {
         var id = $(this).data('id');
-        console.log(id);
+
         swal({
             title: "您确定要删除这条信息吗",
             text: "删除后将无法恢复，请谨慎操作！",
@@ -135,8 +135,12 @@
                 type:"delete",
                 url: '/admin/device/'+id,
                 success:function (res) {
-                    swal("删除成功！", "您已经永久删除了这条信息。", "success");
-                    location.onload();
+                    if (res.status == 1) {
+                        swal("删除成功！", "您已经永久删除了这条信息。", "success");
+                        location.onload();
+                    } else {
+                        swal("删除失败！", "请稍后重试。", "error");
+                    }
                 },
             });
             $.ajax();

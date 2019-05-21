@@ -108,6 +108,22 @@
                              </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">设备：</label>
+                            <div class="col-sm-6">
+                                <select class="chosen-select" data-placement="请选择设备" name="device[]" multiple style="width: 350px;" tabindex="2" >
+                                    @if($user->id)
+                                        @foreach($devices as $device)
+                                            <option value="{{ $device->id }}"  @if (array_search($device->id,array_column($user_device,'id'))) selected="selected" @endif>{{ $device->device_no }}==={{ $device->remark }}</option>
+                                        @endforeach
+                                    @else
+                                        @foreach($devices as $device)
+                                            <option value="{{ $device->id }}">{{ $device->device_no }}==={{ $device->remark }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">照片：</label>
                             @if($user->image)
                                 <a class="fancybox" href="{{ $user->image }}" >

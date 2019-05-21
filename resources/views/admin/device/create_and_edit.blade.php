@@ -11,6 +11,7 @@
     <link href="{{ asset('assets/admin/css/plugins/iCheck/custom.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/style.css?v=4.1.0') }}" rel="stylesheet">
+    <link href="{{ asset('assets/admin/css/plugins/chosen/chosen.css') }}" rel="stylesheet">
 
 </head>
 
@@ -49,34 +50,48 @@
                             @endif
                         </div>
                         {{ csrf_field() }}
-                        <div class="form-group">
+                        {{--<div class="form-group">
                             <label class="col-sm-2 control-label">设备名称：</label>
 
                             <div class="col-sm-6">
                                 <input name="name" id="name" type="text" class="form-control" value="{{ old('name') }}">
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">设备编号：</label>
 
                             <div class="col-sm-10">
-                                <input type="text" id="device_no" name="device_no" class="form-control" value="{{ old('device_no') }}">
+                                <input type="text" id="device_no" name="device_no" class="form-control" value="{{ old('device_no',$device->device_no) }}">
                             </div>
                         </div>
-                        <div class="form-group">
+                        {{--<div class="form-group">
                             <label class="col-sm-2 control-label">设备位置：</label>
 
                             <div class="col-sm-10">
                                 <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}">
                             </div>
-                        </div>
+                        </div>--}}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">备注：</label>
 
                             <div class="col-sm-10">
-                                <input type="text" id="remark" name="remark" class="form-control" value="{{ old('remark') }}">
+                                <input type="text" id="remark" name="remark" class="form-control" value="{{ old('remark',$device->remark) }}">
                             </div>
                         </div>
+                        @role('administrator')
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">所属公司：</label>
+
+                            <div class="col-sm-6">
+                                <select class="chosen-select" name="company_id" style="width: 350px;" tabindex="2" >
+                                    <option value="">请选择公司</option>
+                                    @foreach($companies as $company)
+                                        <option value="{{ $company->id }}" hassubinfo="true" @if ( $device->company_id == $company->id) selected @endif>{{ $company->company_name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @endrole
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
@@ -93,13 +108,15 @@
 <!-- 全局js -->
 <script src="{{ asset('assets/admin/js/jquery.min.js?v=2.1.4') }}"></script>
 <script src="{{ asset('assets/admin/js/bootstrap.min.js?v=3.3.6') }}"></script>
+<!-- Chosen -->
+<script src="{{ asset('assets/admin/js/plugins/chosen/chosen.jquery.js') }}"></script>
 
 <!-- 自定义js -->
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
 
 <script>
     $(document).ready(function () {
-        $("#add_device").onclick(function () {
+        /*$("#add_device").onclick(function () {
             var data = {
                 'name': $("#name").value,
                 'device_no': $("#device_no").value,
@@ -107,7 +124,25 @@
                 'remark' :$("#remark").value
             };
             console.log(data);
-        })
+        });*/
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "95%"
+            }
+        };
+        for (var selector in config) {
+            $(selector).chosen(config[selector]);
+        }
     });
 </script>
 
