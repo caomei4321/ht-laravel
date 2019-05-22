@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Spatie\Permission\Traits\HasRoles;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Auth;
 
-class Admin extends Authenticatable
+class Admin extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use HasRoles;
@@ -22,5 +24,15 @@ class Admin extends Authenticatable
     public function company()
     {
         return $this->belongsTo(Company::class);
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 }

@@ -4,9 +4,8 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -48,13 +47,4 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsToMany(Device::class, 'device_user', 'user_id', 'device_id');
     }
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
 }

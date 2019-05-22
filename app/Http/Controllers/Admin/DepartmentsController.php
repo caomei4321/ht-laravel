@@ -33,8 +33,6 @@ class DepartmentsController extends Controller
 
     public function store(DepartmentRequest $request, Department $department)
     {
-        $this->authorize('own', $department);
-
         //dd($request->all());
         if ($request->user()->hasRole('administrator')) {
             $department->create($request->only('department_name', 'license', 'company_id', 'working_at', 'end_at'));

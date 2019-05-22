@@ -10,12 +10,15 @@ class AuthorizationsController extends Controller
 {
     public function store(AuthorizationRequest $request)
     {
-        $credentials['phone'] = $request->phone;
+        $credentials['email'] = $request->phone;
         $credentials['password'] = $request->password;
 
-        if (!$token = Auth::guard('api')->attempt($credentials)) {
+        if (!Auth::guard('api')->once($credentials)) {
             return $this->response->errorUnauthorized('用户名或密码错误');
         }
+        $user = Auth::guard('api')->getUser();
+
+        $token = Auth::guard('api')->fromUser($user);
 
         return $this->responseWithToken($token);
     }
@@ -28,7 +31,7 @@ class AuthorizationsController extends Controller
 
     public function delete()
     {
-        Auth::guard('api')->logout();
+        Auth::guard('admin')->logout();
         return $this->response->noContent();
     }
 
