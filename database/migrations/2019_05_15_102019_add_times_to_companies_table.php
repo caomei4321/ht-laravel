@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeDepartmentsTable extends Migration
+class AddTimesToCompanies extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class ChangeDepartmentsTable extends Migration
      */
     public function up()
     {
-        Schema::table('departments', function (Blueprint $table) {
+        Schema::table('companies', function (Blueprint $table) {
             $table->time('working_at')->default('9:00:00');
             $table->time('end_at')->default('18:00:00');
         });
@@ -26,9 +26,8 @@ class ChangeDepartmentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('departments', function (Blueprint $table) {
-            $table->dropColumn('working_at');
-            $table->dropColumn('end_at');
+        Schema::table('companies', function (Blueprint $table) {
+            //
         });
     }
 }
