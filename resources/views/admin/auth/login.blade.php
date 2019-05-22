@@ -7,9 +7,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title>H+ 后台主题UI框架 - 登录</title>
-    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
-    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+    <title>公司考勤管理后台</title>
+    <meta name="keywords" content="三晖科技">
+    <meta name="description" content="三晖科技">
 
     <link rel="shortcut icon" href="{{ asset('assets/favicon.ico') }}"> <link href="{{ asset('assets/admin/css/bootstrap.min.css?v=3.3.6') }}" rel="stylesheet">
     <link href="{{ asset('assets/admin/css/font-awesome.css?v=4.4.0') }}" rel="stylesheet">
@@ -43,6 +43,9 @@
             </div>
             <button type="submit" class="btn btn-primary block full-width m-b">登 录</button>
 
+            <div>Copyright &copy;2019 苏州三晖信息科技有限公司 版权所有
+                <p><a href="http://www.beian.miit.gov.cn" target="_blank">备案号：苏ICP备18055553号-3</a></p>
+            </div>
 
             {{--<p class="text-muted text-center"> <a href="login.html#"><small>忘记密码了？</small></a> | <a href="register.html">注册一个新账号</a>
             </p>--}}

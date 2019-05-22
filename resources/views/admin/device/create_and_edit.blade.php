@@ -41,7 +41,12 @@
                     </div>
                 </div>
                 <div class="ibox-content">
+                    @if($device->id)
+                        <form method="post" action="{{ route('device.update',['device'=>$device->id]) }}" class="form-horizontal">
+                            <input type="hidden" name="_method" value="PUT">
+                    @else
                         <form method="post" action="{{ route('device.store') }}" class="form-horizontal">
+                    @endif
                         <div class="form-group">
                             @if( count($errors) >0)
                                 @foreach($errors->all() as $error)

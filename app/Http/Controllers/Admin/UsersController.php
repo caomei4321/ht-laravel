@@ -42,7 +42,7 @@ class UsersController extends Controller
         return view('admin.users.create_and_edit', [
             'user' => $user,
             'departments' => $departments,
-            'device' => $devices
+            'devices' => $devices
         ]);
     }
 
@@ -64,8 +64,22 @@ class UsersController extends Controller
         if (!$request->user()->hasRole('administrator')) {
             $data['company_id'] = $request->user()->company_id;
         }
-        $user->create($data);
-        $user->device()->attach($data['device']);
+
+        $user->fill([
+            'name'  => $data['name'],
+            'job_number' => $data['job_number'],
+            'phone'     => $data['phone'],
+            'password' => $data['password'],
+            'department_id' => $data['department_id'],
+            'image'     => $data['image'],
+            'image_name'=> $data['image_name'],
+            'company_id'=> $data['company_id']
+        ]);
+        $user->save();
+
+        if (isset($data['device'])) {
+            $user->device()->attach($data['device']);
+        }
         return redirect()->route('user.index');
     }
 
@@ -79,15 +93,18 @@ class UsersController extends Controller
         ]);
     }
 
-    public function edit(User $user, Department $department, Company $company, UserRequest $request)
+    public function edit(User $user, Department $department, Company $company, UserRequest $request, Device $device)
     {
         $departments = $department->where('company_id',$request->user()->company_id)->get();
-        $userDevice = $user->device()->get();
+        $userDevice = $user->device()->get()->toArray();
+        $devices = $device->where('company_id', $request->user()->company_id)->get();
         
         return view('admin.users.create_and_edit', [
             'user' => $user,
             'departments' => $departments,
-            'user_device' => $userDevice
+            'devices'     => $devices,
+            'user_device' => $userDevice,
+
         ]);
     }
 

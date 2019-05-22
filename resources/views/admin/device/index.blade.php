@@ -137,7 +137,7 @@
                 success:function (res) {
                     if (res.status == 1) {
                         swal("删除成功！", "您已经永久删除了这条信息。", "success");
-                        location.onload();
+                        location.reload();
                     } else {
                         swal("删除失败！", "请稍后重试。", "error");
                     }

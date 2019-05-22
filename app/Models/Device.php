@@ -22,6 +22,6 @@ class Device extends Model
 
     public function user()
     {
-        return $this->belongsToMany(User::class,'device_user');
+        return $this->belongsToMany(User::class, 'device_user', 'device_id', 'user_id');
     }
 }

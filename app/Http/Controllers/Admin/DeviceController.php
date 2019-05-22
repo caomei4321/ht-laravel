@@ -35,20 +35,18 @@ class DeviceController extends Controller
 
     public function store(DeviceRequest $request, Device $device)
     {
-        $this->authorize('own', $device);
-
-        if ($request->user()->harRole('administrator')) {
+        if ($request->user()->hasRole('administrator')) {
             $device->create($request->only([
                 'device_no',
                 'remark',
                 'company_id'
             ]));
         } else {
-            $device->create($request->only([
+            $device->create([
                 'device_no' => $request->device_no,
                 'remark' => $request->remark,
                 'company_id' => $request->user()->company_id
-            ]));
+            ]);
         }
 
         return redirect()->route('device.index');
@@ -95,7 +93,7 @@ class DeviceController extends Controller
 
     public function destroy(Device $device)
     {
-        //$this->authorize('own', $device);
+        $this->authorize('own', $device);
         $device->delete();
 
         return response()->json([

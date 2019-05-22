@@ -83,7 +83,7 @@
                                 <input name="password" id="password" type="password" class="form-control" value="{{ old('passwor',$user->password) }}">
                              </div>
                         </div>
-                        @role('administrator')
+                        {{--@role('administrator')
                         <div class="form-group">
                             <label class="col-sm-2 control-label">公司：</label>
                             <div class="col-sm-6">
@@ -95,7 +95,7 @@
                                 </select>
                             </div>
                         </div>
-                        @endrole
+                        @endrole--}}
                         <div class="form-group">
                              <label class="col-sm-2 control-label">部门：</label>
                              <div class="col-sm-6">
@@ -113,7 +113,7 @@
                                 <select class="chosen-select" data-placement="请选择设备" name="device[]" multiple style="width: 350px;" tabindex="2" >
                                     @if($user->id)
                                         @foreach($devices as $device)
-                                            <option value="{{ $device->id }}"  @if (array_search($device->id,array_column($user_device,'id'))) selected="selected" @endif>{{ $device->device_no }}==={{ $device->remark }}</option>
+                                            <option value="{{ $device->id }}"  @if( array_search($device->id,array_column($user_device,'id','id'))) selected="selected" @endif>{{ $device->device_no }}==={{ $device->remark }}</option>
                                         @endforeach
                                     @else
                                         @foreach($devices as $device)

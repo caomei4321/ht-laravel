@@ -25,7 +25,7 @@ class DeviceRequest extends FormRequest
         return [
             'device_no' => 'required',
             'remark'    => 'required',
-            'company_id'=> 'required',
+            'company_id'=> '',
         ];
     }
 }

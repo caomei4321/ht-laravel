@@ -45,7 +45,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function device()
     {
-        return $this->belongsToMany(Device::class,'device_user');
+        return $this->belongsToMany(Device::class, 'device_user', 'user_id', 'device_id');
     }
 
     public function getJWTIdentifier()

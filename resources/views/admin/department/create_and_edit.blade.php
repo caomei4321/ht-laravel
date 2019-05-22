@@ -45,9 +45,9 @@
                     @if($department->id)
                         <form method="POST" action="{{ route('department.update',['department'=>$department->id]) }}" class="form-horizontal" enctype="multipart/form-data">
                             <input type="hidden" name="_method" value="PUT">
-                            @else
-                                <form method="POST" action="{{ route('department.store') }}" class="form-horizontal" enctype="multipart/form-data">
-                                    @endif
+                    @else
+                        <form method="POST" action="{{ route('department.store') }}" class="form-horizontal" enctype="multipart/form-data">
+                    @endif
                                     <div class="form-group">
                                         @if( count($errors) >0)
                                             @foreach($errors->all() as $error)

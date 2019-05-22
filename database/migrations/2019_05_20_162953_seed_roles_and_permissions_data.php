@@ -21,8 +21,8 @@ class SeedRolesAndPermissionsData extends Migration
         app(Spatie\Permission\PermissionRegistrar::class)->forgetCachedPermissions();
 
         //创建角色
-        //Role::create(['name' => 'administrator', 'guard_name' => 'admin']);
-        //Role::create(['name' => 'company_manage', 'guard_name' => 'admin']);
+        Role::create(['name' => 'administrator', 'guard_name' => 'admin']);
+        Role::create(['name' => 'company_manage', 'guard_name' => 'admin']);
 
     }
 

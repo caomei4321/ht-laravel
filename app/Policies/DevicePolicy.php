@@ -17,7 +17,7 @@ class DevicePolicy
         }
     }
 
-    public function own( Admin $admin, Device $device)
+    public function own(Admin $admin, Device $device)
     {
         return $admin->company_id == $device->company_id;
     }
