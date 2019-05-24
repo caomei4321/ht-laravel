@@ -34,10 +34,7 @@ class UsersController extends Controller
         ]);
     }
 
-    /*
-     * img
-     *
-     * */
+    //员工录入接口
     public function test(Request $request, User $user)
     {
         $data = $request->all();
@@ -59,6 +56,7 @@ class UsersController extends Controller
             'department_id' => $data['department_id'],
             'image_name'    => $imgname,
             'image'         => $data['image'],
+            'company_id'    => $this->user()->company_id
         ]);
         $user->save();
         $user->device()->attach($data['license']);

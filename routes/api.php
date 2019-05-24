@@ -37,5 +37,7 @@ $api->version('v1', [
         $api->get('userRecords','UserRecordsController@records');
 
         $api->get('devices','DevicesController@deviceList');  //返回设备列表
+
+        $api->post('test', 'UsersController@test');  //录信息接口
     });
 });
