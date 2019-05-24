@@ -35,5 +35,7 @@ $api->version('v1', [
         ->name('api.authorizations.delete');
     $api->group(['middleware' => 'auth:api'],function ($api) {
         $api->get('userRecords','UserRecordsController@records');
+
+        $api->get('devices','DevicesController@deviceList');  //返回设备列表
     });
 });
