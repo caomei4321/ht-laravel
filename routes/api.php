@@ -22,7 +22,7 @@ $api->version('v1', [
     });
     $api->get('htData', 'HtDataController@store');
     $api->get('users', 'UsersController@users');
-    $api->post('userRecord', 'UsersController@userRecord');
+    $api->post('userRecord', 'UsersController@userRecord');  //打卡接口
 
     $api->post('test', 'UsersController@test');
     // 登录

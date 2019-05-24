@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\UserRecord;
 use App\Http\Requests\Api\AuthorizationRequest;
 use Illuminate\Support\Facades\Auth;
-use Tymon\JWTAuth\Contracts\Providers\Storage;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -20,6 +20,7 @@ class UsersController extends Controller
         ]);
     }
 
+    //打卡接口
     public function userRecord(Request $request)
     {
         $user_id = User::where('job_number', $request->job_number)->first()->id;
@@ -33,20 +34,35 @@ class UsersController extends Controller
         ]);
     }
 
-    public function test(Request $request)
+    /*
+     * img
+     *
+     * */
+    public function test(Request $request, User $user)
     {
+        $data = $request->all();
 
-        $imgdata=$request->img;
-        $base64_str = substr($imgdata, strpos($imgdata, ",")+1);
-        $image=base64_decode($base64_str);
-        $imgname=rand(1000,10000).time().'.png';
-            \Illuminate\Support\Facades\Storage::disk('public')->put($imgname,$image);
-        $data['job_number'] = env('APP_URL').'/uploads/android/' . $imgname;
+        $imgdata = $request->img;
+        $base64_str = substr($imgdata, strpos($imgdata, ",") + 1);
+        $image = base64_decode($base64_str);
+        //$imgname=rand(1000,10000).time().'.jpg';
+        $imgname = $request->name . '.png';
+        Storage::disk('public')->put($imgname, $image);
+        $data['image'] = env('APP_URL') . '/uploads/images/users/' . $imgname;
 
         //$data['job_number'] = $request->img;
-        $data['license'] = $request->pawd;
-        $data['user_id'] = 60;
-        UserRecord::create($data);
+        //$data['license'] = $request->license;
+        //$data['name'] = $request->name;
+        $user->fill([
+            'name'          => $data['name'],
+            'job_number'    => $data['job_number'],
+            'department_id' => $data['department_id'],
+            'image_name'    => $imgname,
+            'image'         => $data['image'],
+        ]);
+        $user->save();
+        $user->device()->attach($data['license']);
+        //UserRecord::create($data);
         return $this->response()->array(['msg' => '保存成功']);
     }
 }

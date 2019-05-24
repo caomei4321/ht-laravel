@@ -50,7 +50,7 @@ return [
 
         'public' => [
             'driver' => 'local',
-            'root' => public_path('uploads/android'),
+            'root' => public_path('uploads/images/users'),
             'url' => env('APP_URL').'/upload',
             'visibility' => 'public',
         ],
