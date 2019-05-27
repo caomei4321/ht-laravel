@@ -38,6 +38,6 @@ $api->version('v1', [
 
         $api->get('devices','DevicesController@deviceList');  //返回设备列表
 
-        $api->post('test', 'UsersController@test');  //录信息接口
+        $api->post('userEntry', 'UsersController@userEntry');  //录信息接口
     });
 });

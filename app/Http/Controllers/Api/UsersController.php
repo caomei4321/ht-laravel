@@ -35,7 +35,7 @@ class UsersController extends Controller
     }
 
     //员工录入接口
-    public function test(Request $request, User $user)
+    public function userEntry(Request $request, User $user)
     {
         //$data = $request->only(['name','job_number','department_id','license']);
         //return $data;
@@ -44,7 +44,7 @@ class UsersController extends Controller
         $base64_str = substr($imgdata, strpos($imgdata, ",") + 1);
         $image = base64_decode($base64_str);
         //$imgname=rand(1000,10000).time().'.jpg';
-        $imgname = $request->name . '.png';
+        $imgname = $request->name . '.jpg';
         Storage::disk('public')->put($imgname, $image);
         $data['image'] = env('APP_URL') . '/uploads/images/users/' . $imgname;
 
