@@ -6,6 +6,7 @@ use App\Models\Admin;
 use App\Models\User;
 use App\Models\UserRecord;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -40,8 +41,9 @@ class IndexController extends Controller
                     ->withInput();
         }
         $data = $request->all();
-        if (strlen($data['password'])<57) {
-            $data['password'] = bcrypt( $data['password']);
+
+        if (!Hash::check($data['password'], $request->user()->password)) {
+            $data['password'] = Hash::make($data['password']);
         }
         $request->user()->update($data);
         return redirect()->route('index.set');

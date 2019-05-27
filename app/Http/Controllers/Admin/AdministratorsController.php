@@ -9,6 +9,7 @@ use App\Models\Company;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 //use App\Http\Requests\AdministratorRequest;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class AdministratorsController extends Controller
@@ -32,7 +33,7 @@ class AdministratorsController extends Controller
         $data = [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($request->password),
             'station_id' => $request->company_id
         ];
         $administrator = $administrator->create($data);
@@ -61,13 +62,13 @@ class AdministratorsController extends Controller
 
     public function update(Request $request, Admin $administrator)
     {
-        if (strlen($request->password) == 57) {
+        if (Hash::check($request->password,$administrator->password)) {
             $administrator->update($request->only(['name', 'email', 'company_id']));
         } else {
             $administrator->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => bcrypt($request->password),
+                'password' => Hash::make($request->password),
                 'company_id' => $request->company_id
             ]);
         }
