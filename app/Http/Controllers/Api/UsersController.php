@@ -37,8 +37,8 @@ class UsersController extends Controller
     //员工录入接口
     public function test(Request $request, User $user)
     {
-        $data = $request->all();
-
+        $data = $request->only(['name','job_number','department_id','license']);
+        return $data;
         $imgdata = $request->img;
         $base64_str = substr($imgdata, strpos($imgdata, ",") + 1);
         $image = base64_decode($base64_str);
