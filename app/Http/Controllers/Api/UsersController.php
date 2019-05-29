@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Company;
+use App\Models\Device;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\UserRecord;
@@ -18,6 +20,24 @@ class UsersController extends Controller
             'data' => $users,
             'success' => 1
         ]);
+    }
+
+    public function companyUsers(Request $request)
+    {
+        if (!$request->license) {
+            return [];
+        }
+        $license = $request->license;
+        $company = Device::where('device_no',$license)->first()->company()->first();//->users()->get();
+        if (!$company) {
+            return [];
+        }
+        $users = $company->users()->get();
+        return $this->response->array([
+            'data'      => $users,
+            'success'   => 1
+        ]);
+
     }
 
     //打卡接口
