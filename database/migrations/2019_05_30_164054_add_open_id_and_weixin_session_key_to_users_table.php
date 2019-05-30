@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeAdminsTable extends Migration
+class AddOpenIdAndWeixinSessionKeyToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class ChangeAdminsTable extends Migration
      */
     public function up()
     {
-        Schema::table('admins', function (Blueprint $table) {
-            $table->dropColumn('working_at');
-            $table->dropColumn('end_at');
-            $table->dropColumn('company_name');
-            $table->unsignedInteger('company_id')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('open_id')->nullable();
+            $table->string('weixin_session_key')->nullable();
         });
     }
 
@@ -29,7 +27,8 @@ class ChangeAdminsTable extends Migration
     public function down()
     {
         Schema::table('admins', function (Blueprint $table) {
-            //
+            $table->dropColumn('open_id');
+            $table->dropColumn('weixin_session_key');
         });
     }
 }

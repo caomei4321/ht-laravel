@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+use Spatie\Permission\Traits\HasRoles;
+use Auth;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -15,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'password', 'image', 'job_number', 'image_name', 'department_id', 'company_id'
+        'name', 'phone', 'password', 'image', 'job_number', 'image_name', 'department_id', 'company_id', 'open_id', 'weixin_session_key'
     ];
 
     /**
@@ -45,6 +49,16 @@ class User extends Authenticatable
     public function device()
     {
         return $this->belongsToMany(Device::class, 'device_user', 'user_id', 'device_id');
+    }
+
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+    }
+
+    public function getJWTCustomClaims()
+    {
+        return [];
     }
 
 }

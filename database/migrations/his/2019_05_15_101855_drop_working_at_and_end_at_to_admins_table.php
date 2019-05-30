@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeUsersTable extends Migration
+class DropWorkingAtAndEndAtToAdminsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,10 @@ class ChangeUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('admins', function (Blueprint $table) {
+            $table->dropColumn('working_at');
+            $table->dropColumn('end_at');
+            $table->dropColumn('company_name');
             $table->unsignedInteger('company_id')->nullable();
         });
     }
@@ -25,8 +28,8 @@ class ChangeUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('company_id');
+        Schema::table('admins', function (Blueprint $table) {
+            //
         });
     }
 }

@@ -16,7 +16,7 @@ class Admin extends Authenticatable implements JWTSubject
     protected $guard_name = 'admin';
 
     protected $fillable = [
-        'name', 'email', 'password', 'company_id'
+        'name', 'email', 'password', 'company_id', 'open_id', 'weixin_session_key'
     ];
 
     protected $hidden = [

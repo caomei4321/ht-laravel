@@ -11,6 +11,7 @@
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "overtrue/laravel-wechat": "~4.0",
         "spatie/laravel-permission": "^2.36",
         "tymon/jwt-auth": "1.0.0-rc.2"
     },
@@ -19,7 +20,8 @@
         "fzaninotto/faker": "~1.4",
         "mockery/mockery": "~1.0",
         "phpunit/phpunit": "~6.0",
-        "symfony/thanks": "^1.0"
+        "symfony/thanks": "^1.0",
+        "xethron/migrations-generator": "^2.0"
     },
     "autoload": {
         "classmap": [

@@ -30,13 +30,18 @@ $api->version('v1', [
     // 登录
     $api->post('authorizations', 'AuthorizationsController@store')
         ->name('api.authorizations.store');
+    //小程序登录
+    $api->post('weappAuthorizations', 'AuthorizationsController@weappStore');
     //刷新token
     $api->put('authorizations/current', 'AuthorizationsController@update')
         ->name('api.authorizations.update');
     $api->delete('authorizations/destroy', 'AuthorizationsController@delete')
         ->name('api.authorizations.delete');
-    $api->group(['middleware' => 'auth:api'],function ($api) {
-        $api->get('userRecords','UserRecordsController@records');
+
+    $api->post('wuthorizations', 'AuthorizationsController@weappStore');
+    $api->get('userRecords','UserRecordsController@records');
+    $api->group(['middleware' => 'auth:api,apiAdmin'],function ($api) {
+
 
         $api->get('devices','DevicesController@deviceList');  //返回设备列表
 

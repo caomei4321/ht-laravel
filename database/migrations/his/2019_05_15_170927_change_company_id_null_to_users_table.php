@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeDevicesTable extends Migration
+class ChangeCompanyIdNullToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class ChangeDevicesTable extends Migration
      */
     public function up()
     {
-        Schema::table('devices', function (Blueprint $table) {
-            $table->unsignedInteger('company_id')->nullable(false);
-            $table->dropColumn('name');
-            $table->dropColumn('address');
+        Schema::table('users', function (Blueprint $table) {
+            $table->unsignedInteger('company_id')->nullable();
         });
     }
 
@@ -27,8 +25,8 @@ class ChangeDevicesTable extends Migration
      */
     public function down()
     {
-        Schema::table('devices', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('company_id');
         });
     }
 }

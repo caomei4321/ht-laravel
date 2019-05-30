@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ChangeDeviceUserTable extends Migration
+class DropNameAndAddressToDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class ChangeDeviceUserTable extends Migration
      */
     public function up()
     {
-        Schema::table('device_user', function (Blueprint $table) {
-            $table->renameColumn('department_id','device_id');
+        Schema::table('devices', function (Blueprint $table) {
+            $table->unsignedInteger('company_id')->nullable(false);
+            $table->dropColumn('name');
+            $table->dropColumn('address');
         });
     }
 
@@ -25,7 +27,7 @@ class ChangeDeviceUserTable extends Migration
      */
     public function down()
     {
-        Schema::table('device_user', function (Blueprint $table) {
+        Schema::table('devices', function (Blueprint $table) {
             //
         });
     }
