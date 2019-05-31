@@ -22,6 +22,13 @@ class UsersController extends Controller
         ]);
     }
 
+    public function thisUser()
+    {
+        $user = $this->user();
+        $user->roles = $user->getRoleNames();
+        return $user;
+    }
+
     public function companyUsers(Request $request)
     {
         if (!$request->license) {
