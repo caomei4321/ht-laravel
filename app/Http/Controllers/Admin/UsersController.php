@@ -52,7 +52,7 @@ class UsersController extends Controller
         $data = $request->all();
         if ($request->image) {
             //$fillname = 'person'.$request->job_number;
-            $result = $uploader->save($request->image, 'users', $data['name']);
+            $result = $uploader->save($request->image, 'users', $data['name'].$data['job_number']);
             if ($result) {
                 $data['image'] = $result['path'];
                 $data['image_name'] = $result['filename'];
@@ -113,7 +113,7 @@ class UsersController extends Controller
         $data = $request->all();
         if ($request->image) {
             //$fillname = 'person'.$request->job_number;
-            $result = $uploader->save($request->image, 'users', $data['name']);
+            $result = $uploader->save($request->image, 'users', $data['name'].$data['job_number']);
             if ($result) {
                 $data['image'] = $result['path'];
                 $data['image_name'] = $result['filename'];
@@ -123,7 +123,9 @@ class UsersController extends Controller
             $data['password'] = bcrypt($request->password);
         }
         $user->update($data);
-        $user->device()->sync($data['device']);
+        if (isset($data['device'])) {
+            $user->device()->sync($request->device);
+        }
         return redirect()->route('user.index');
     }
 

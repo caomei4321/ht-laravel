@@ -64,7 +64,7 @@ class UsersController extends Controller
         $base64_str = substr($imgdata, strpos($imgdata, ",") + 1);
         $image = base64_decode($base64_str);
         //$imgname=rand(1000,10000).time().'.jpg';
-        $imgname = $request->name . '.jpg';
+        $imgname = $request->name.$request->job_number. '.jpg';
         Storage::disk('public')->put($imgname, $image);
         $data['image'] = env('APP_URL') . '/uploads/images/users/' . $imgname;
 
