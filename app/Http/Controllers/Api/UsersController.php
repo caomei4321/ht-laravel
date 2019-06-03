@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Company;
+use App\Models\Department;
 use App\Models\Device;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -26,6 +27,9 @@ class UsersController extends Controller
     {
         $user = $this->user();
         $user->roles = $user->getRoleNames();
+        if ($user->department_id) {
+            $user->department = Department::select(['id','department_name'])->find($user->department_id);
+        }
         return $user;
     }
 
