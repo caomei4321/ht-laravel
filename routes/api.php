@@ -47,5 +47,9 @@ $api->version('v1', [
         $api->get('devices','DevicesController@deviceList');  //返回设备列表
 
         $api->post('userEntry', 'UsersController@userEntry');  //录信息接口
+
+        $api->get('personDetail', 'UsersController@personDetail');  //人员详情
+
+        $api->get('allPerson', 'UsersController@allPerson');  //人员详情
     });
 });

@@ -29,6 +29,7 @@ class UsersController extends Controller
         return $user;
     }
 
+    //打卡机器公司员工接口
     public function companyUsers(Request $request)
     {
         if (!$request->license) {
@@ -41,6 +42,19 @@ class UsersController extends Controller
         }
         $users = $company->users()->get();
         return $this->response->array([
+            'data'      => $users,
+            'success'   => 1
+        ]);
+
+    }
+
+    //小程序公司员工接口
+    public function allPerson()
+    {
+        $companyId = $this->user()->company_id;
+        $company = Company::find($companyId);
+        $users = $company->users()->get();
+        return $this->response()->array([
             'data'      => $users,
             'success'   => 1
         ]);
@@ -90,5 +104,13 @@ class UsersController extends Controller
         $user->device()->attach($data['license']);
         //UserRecord::create($data);
         return $this->response()->array(['msg' => '保存成功']);
+    }
+
+    //人员详情
+    public function personDetail(Request $request)
+    {
+        $id = $request->id;
+        $user = User::find($id);
+        return $this->response()->array($user);
     }
 }
