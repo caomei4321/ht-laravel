@@ -148,6 +148,9 @@ class UsersController extends Controller
         $late_count = $days - $user->on_time_count;  //缺勤次数
         $user->late_count = $late_count;
 
+        $user->record = $user->user_records()
+            ->whereDate('created_at', '>=', $startTime)
+            ->get(['created_at']);
 
         return $this->response()->array($user);
     }
