@@ -129,6 +129,44 @@ class UsersController extends Controller
     {
         $id = $request->id;
         $user = User::find($id);
+        $workingAt = $user->department()->first()->working_at;
+        $startTime = date('Y-m-01', strtotime(date("Y-m-d")));
+        $endTime = date("Y-m-d");
+        $on_time = $user->user_records()
+            ->whereDate('created_at', '>=', $startTime)
+            ->whereDate('created_at', '<', $endTime)
+            ->whereTime('created_at', '<', $workingAt)
+            ->selectRaw('DATE(created_at) as date')
+            ->groupBy('date')
+            ->get();
+        $user->on_time_count = count($on_time);  //准时出勤次数
+
+        // 缺勤次数 == 总天数-准时出勤次数-周六周日天数
+
+        $days = $this->getDays($startTime, $endTime);  //本月除去周末的天数
+
+        $late_count = $days - $user->on_time_count;  //缺勤次数
+        $user->late_count = $late_count;
+
+
         return $this->response()->array($user);
+    }
+    protected function getDays($date1, $date2,$strto=true)
+    {
+
+        if($strto){
+            $date1 = strtotime($date1);
+            $date2 = strtotime($date2);
+        }
+        $delta = ($date2 - $date1) / (60 * 60 * 24);
+
+        $weekEnds = 0;
+
+        for($i = 0; $i < $delta; $i++)
+        {
+            if(date('w', $date1) == 0 || date('w', $date1) == 6) $weekEnds ++;
+            $date1 +=60 * 60 * 24;
+        }
+        return $delta - $weekEnds;
     }
 }
