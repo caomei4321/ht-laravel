@@ -64,8 +64,22 @@ class UsersController extends Controller
     //打卡接口
     public function userRecord(Request $request)
     {
-        $user_id = User::where('job_number', $request->job_number)->first()->id;
-        $data['user_id'] = $user_id;
+        $device = Device::where('device_no', $request->license)->first();
+        if ($device) {
+            $companyId = $device->company_id;
+        } else {
+            return $this->response->errorBadRequest('请求错误');
+        }
+        $user = User::where([
+            ['job_number', $request->job_number],
+            ['company_id', $companyId]
+            ])->first();
+        if ($user) {
+            $userId = $user->id;
+        } else {
+            return $this->response->errorBadRequest('请求错误');
+        }
+        $data['user_id'] = $userId;
         $data['job_number'] = $request->job_number;
         $data['license'] = $request->license;
         UserRecord::create($data);
