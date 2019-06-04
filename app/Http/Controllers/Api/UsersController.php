@@ -151,7 +151,7 @@ class UsersController extends Controller
 
         $user->record = $user->user_records()
             ->whereDate('created_at', '>=', $startTime)
-            ->get(['created_at']);
+            ->get(['time']);
 
         return $this->response()->array($user);
     }

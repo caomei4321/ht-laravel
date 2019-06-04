@@ -51,5 +51,7 @@ $api->version('v1', [
         $api->get('personDetail', 'UsersController@personDetail');  //人员详情
 
         $api->get('allPerson', 'UsersController@allPerson');  //人员详情
+
+        $api->get('attendance', 'UserRecordsController@attendance');  //人员详情
     });
 });
