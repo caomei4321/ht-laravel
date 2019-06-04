@@ -148,7 +148,7 @@ class AuthorizationsController extends Controller
             $attribute['password'] = $request->password;
 
             if (Auth::guard('apiAdmin')->once($attribute)) {
-                $user = Auth::guard('api')->getUser();
+                $user = Auth::guard('apiAdmin')->getUser();
 
                 $user->update(['password' => Hash::make($request->newpwd)]);
 
