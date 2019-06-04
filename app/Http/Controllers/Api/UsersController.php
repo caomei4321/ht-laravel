@@ -86,6 +86,7 @@ class UsersController extends Controller
         $data['user_id'] = $userId;
         $data['job_number'] = $request->job_number;
         $data['license'] = $request->license;
+        $data['time'] = $request->time;
         UserRecord::create($data);
         return $this->response()->array([
             'status' => 1,
