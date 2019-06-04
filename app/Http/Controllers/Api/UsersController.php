@@ -57,7 +57,7 @@ class UsersController extends Controller
     {
         $companyId = $this->user()->company_id;
         $company = Company::find($companyId);
-        $users = $company->users()->get();
+        $users = $company->users()->paginate();
         return $this->response()->array([
             'data'      => $users,
             'success'   => 1
