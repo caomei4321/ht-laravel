@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\Api\AuthorizationRequest;
+use Illuminate\Support\Facades\Hash;
 
 class AuthorizationsController extends Controller
 {
@@ -113,6 +114,51 @@ class AuthorizationsController extends Controller
         }
 
         return $this->response->errorUnauthorized('用户名或密码错误');
+    }
+
+    /*
+     * 修改密码
+     * */
+    public function resetPassword(Request $request)
+    {
+        $user = $this->user();
+
+        if (isset($user->job_number)) {
+            if ($user->phone != $request->phone) {
+                return $this->response->errorUnauthorized('请求错误');
+            }
+
+            $attribute['phone'] = $request->phone;
+            $attribute['password'] = $request->password;
+
+            if (Auth::guard('api')->once($attribute)) {
+                $user = Auth::guard('api')->getUser();
+
+                $user->update(['password' => Hash::make($request->newpwd)]);
+
+                $token = Auth::guard('api')->fromUser($user);
+
+                return $this->responseWithToken($token);
+            }
+        } else {
+            if ($user->email != $request->phone) {
+                return $this->response->errorUnauthorized('请求错误');
+            }
+            $attribute['email'] = $request->phone;
+            $attribute['password'] = $request->password;
+
+            if (Auth::guard('apiAdmin')->once($attribute)) {
+                $user = Auth::guard('api')->getUser();
+
+                $user->update(['password' => Hash::make($request->newpwd)]);
+
+                $token = Auth::guard('apiAdmin')->fromUser($user);
+
+                return $this->responseWithToken($token);
+            }
+        }
+        return $this->response->errorUnauthorized('请求错误');
+
     }
 
     protected function updateOpenId($openid)

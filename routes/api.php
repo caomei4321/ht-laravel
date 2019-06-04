@@ -42,6 +42,8 @@ $api->version('v1', [
     $api->get('userRecords','UserRecordsController@records');
     $api->group(['middleware' => 'auth:api,apiAdmin'],function ($api) {
 
+        $api->post('resetPassword', 'AuthorizationsController@resetPassword'); //修改密码
+
         $api->get('thisUser', 'UsersController@thisUser');   //当前用户信息
 
         $api->get('devices','DevicesController@deviceList');  //返回设备列表
