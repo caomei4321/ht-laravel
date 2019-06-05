@@ -58,6 +58,6 @@ $api->version('v1', [
 
         $api->post('search', 'UserRecordsController@search');  //查询接口
 
-        $api->get('count', 'UserRecordsController@count');
+        $api->get('count', 'UserRecordsController@count');  //统计
     });
 });

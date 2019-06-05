@@ -175,7 +175,12 @@ class UserRecordsController extends Controller
         $data['year']  = $year;
 
         for ($i = 1; $i <= 12; $i++) {
-            if (($i) > date('m')) break;  //当 i 大于当前月份时结束循环
+            if (($i) > date('m')) {   //当 i 大于当前月份时
+                $data['on_time_count'][$i-1] = 0;
+                $data['late_count'][$i-1] = 0;
+
+                continue;
+            }
 
             $monthCount = $this->monthCount($year, $i, $companyId);
 
