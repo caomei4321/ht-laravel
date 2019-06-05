@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\UserRecord;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -161,6 +162,79 @@ class UserRecordsController extends Controller
         }
     }
 
+    /*
+     * 统计
+     * */
+    public function count()
+    {
+        $companyId = $this->user()->company_id;
+
+        $year = date("Y");
+
+        //return $this->monthCount(2019,6,1);
+        $data['year']  = $year;
+
+        for ($i = 1; $i <= 12; $i++) {
+            if (($i) > date('m')) break;  //当 i 大于当前月份时结束循环
+
+            $monthCount = $this->monthCount($year, $i, $companyId);
+
+            $data['on_time_count'][$i-1] = $monthCount['on_time_count'];
+            $data['late_count'][$i-1] = $monthCount['late_count'];
+        }
+
+        return $this->response->array($data);
+    }
+
+    protected function monthCount($year, $month, $companyId)
+    {
+        $firstDay = date("Y-$month-01");
+
+        if ($month < 10) {
+            $month = "0".$month;
+        }
+
+        if (date('Y-m') == date("Y-$month") ) {
+            $lastDay = date('Y-m-d');
+        } else {
+            $lastDay = date('Y-m-d', strtotime("$firstDay +1 month"));
+        }
+
+        $days = $this->getDays($firstDay,$lastDay);
+
+        //查询月的公司所有用户的缺勤和准时记录
+        $records = User::where('company_id', $companyId)
+                    ->get()
+                    ->map(function (User $user) use ($year, $month, $days) {
+                        $workingAt = $user->department()->first()->working_at;
+
+                        $onTime = $user->user_records()
+                                     ->whereYear('created_at', $year)
+                                     ->whereMonth('created_at', $month)
+                                     ->whereTime('created_at', '<', $workingAt)
+                                     ->selectRaw('DATE(created_at) as date')
+                                     ->groupBy('date')
+                                     ->get();
+
+                        $data['on_time_count'] = count($onTime);
+                        $data['late_count'] = $days - $data['on_time_count'];
+
+                        return $data;
+                    });
+
+        $data['on_time_count'] = 0;
+        $data['late_count'] = 0;
+
+        foreach ($records as $record) {
+            $data['on_time_count'] = $data['on_time_count'] + $record['on_time_count'];
+            $data['late_count'] = $data['late_count'] + $record['late_count'];
+        }
+        return $data;
+    }
+
+    /*
+     * 计算两个日期之间除周末外的天数
+     * */
     protected function getDays($date1, $date2, $strto = true)
     {
 
