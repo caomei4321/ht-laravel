@@ -60,4 +60,12 @@ $api->version('v1', [
 
         $api->get('count', 'UserRecordsController@count');  //统计
     });
+
+    $api->any('car/get', 'CarNumberController@getTest');
+
+    $api->any('car/serial', 'CarNumberController@serial');
+
+    $api->any('car/receive', 'CarNumberController@receive');
+
+    $api->get('carRecord', 'CarsController@carRecord');  // 车辆统计
 });
