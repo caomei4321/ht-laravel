@@ -40,6 +40,9 @@ $api->version('v1', [
 
     $api->post('wuthorizations', 'AuthorizationsController@weappStore');
     $api->get('userRecords','UserRecordsController@records');
+
+    $api->post('breakpointRecord', 'UsersController@breakpointRecord');
+
     $api->group(['middleware' => 'auth:api,apiAdmin'],function ($api) {
 
         $api->post('resetPassword', 'AuthorizationsController@resetPassword'); //修改密码

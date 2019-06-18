@@ -68,30 +68,59 @@ class UsersController extends Controller
     //打卡接口
     public function userRecord(Request $request)
     {
-        $device = Device::where('device_no', $request->license)->first();
+        $data = $request->only('job_number', 'license', 'time');
+
+        if ($this->saveRecode($data)) {
+            return $this->response()->array([
+                'status' => 1,
+                'message' => '打卡成功'
+            ]);
+        }
+    }
+
+    /*
+     * 打卡断点续传接口
+     *
+     * */
+    public function breakpointRecord(Request $request)
+    {
+        $personInfos = $request->only('personInfos');
+
+        foreach ($personInfos['personInfos'] as $k=>$v) {
+            //单双引号很重要
+            //'{"job_number": "A0010","time":"2019-06-19 12:00:00","license": "d7a677f2-bc5d-4468-8397-287c14a7bc96"}';
+            $recodeData = json_decode($v,true);
+            $this->saveRecode($recodeData);
+        }
+    }
+
+    /*
+     * 保存打卡信息
+     * */
+    protected function saveRecode($recodeData)
+    {
+        $device = Device::where('device_no', $recodeData['license'])->first();
         if ($device) {
             $companyId = $device->company_id;
         } else {
             return $this->response->errorBadRequest('请求错误');
         }
         $user = User::where([
-            ['job_number', $request->job_number],
+            ['job_number', $recodeData['job_number']],
             ['company_id', $companyId]
-            ])->first();
+        ])->first();
         if ($user) {
             $userId = $user->id;
         } else {
             return $this->response->errorBadRequest('请求错误');
         }
         $data['user_id'] = $userId;
-        $data['job_number'] = $request->job_number;
-        $data['license'] = $request->license;
-        $data['time'] = $request->time;
-        UserRecord::create($data);
-        return $this->response()->array([
-            'status' => 1,
-            'message' => '打卡成功'
-        ]);
+        $data['job_number'] = $recodeData['job_number'];
+        $data['license'] = $recodeData['license'];
+        $data['time'] = $recodeData['time'];
+        if (UserRecord::create($data)) {
+            return true;
+        }
     }
 
     //员工录入接口
