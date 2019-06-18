@@ -42,6 +42,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('administrator/set','Admin\IndexController@set')->name('index.set');
         Route::put('administrator/update/{administrator}','Admin\IndexController@update')->name('index.update');
         Route::get('common','Admin\IndexController@common')->name('index.common');
+        // 车牌管理
+        Route::any('license', 'Admin\LicenseController@index')->name('license.index');
+        Route::any('license/create', 'Admin\LicenseController@create')->name('license.create');
+        Route::post('license/store', 'Admin\LicenseController@store')->name('license.store');
+        Route::get('license/edit', 'Admin\LicenseController@edit')->name('license.edit');
+        Route::post('license/update', 'Admin\LicenseController@update')->name('license.update');
+        Route::delete('license/{license}', 'Admin\LicenseController@delete')->name('license.delete');
 
         Route::get('recordReport','Admin\RecordReportController@recordReport')->name('report.recordReport');
         Route::get('recordReport/download/','Admin\RecordReportController@recordReportDownload')->name('report.download');

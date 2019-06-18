@@ -98,6 +98,9 @@
                 <li>
                     <a class="J_menuItem" href="{{ route('report.detailReport') }}"><i class="fa fa-columns"></i> <span class="nav-label">每日报表</span></a>
                 </li>
+                <li>
+                    <a class="J_menuItem" href="{{ route('license.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">车牌列表</span></a>
+                </li>
                 @hasrole('company_manage')
                 <li>
                     <a class="J_menuItem" href="{{ route('index.set') }}"><i class="fa fa-columns"></i> <span class="nav-label">系统设置</span></a>
