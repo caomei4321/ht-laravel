@@ -84,6 +84,7 @@ class UsersController extends Controller
      * */
     public function breakpointRecord(Request $request)
     {
+        return $request->all();
         $personInfos = $request->only('personInfos');
 
         foreach ($personInfos['personInfos'] as $k=>$v) {
