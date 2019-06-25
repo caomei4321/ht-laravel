@@ -84,14 +84,14 @@ class UsersController extends Controller
      * */
     public function breakpointRecord(Request $request)
     {
-        //return $request->all();
         $personInfos = $request->only('personInfos');
 
         foreach ($personInfos['personInfos'] as $k=>$v) {
             //单双引号很重要
             //'{"job_number": "A0010","time":"2019-06-19 12:00:00","license": "d7a677f2-bc5d-4468-8397-287c14a7bc96"}';
-            $recodeData = json_decode($v,true);
-            $this->saveRecode($recodeData);
+            //$recodeData = json_decode($v,true);
+            //$this->saveRecode($recodeData);
+            return $v;
         }
     }
 
