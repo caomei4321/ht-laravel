@@ -55,11 +55,11 @@ class UserRecordsExport implements FromView
 
             //迟到次数
             $userRecord->lateCount = $userRecord->user_records()
-                ->whereDate('created_at', '>=', $startTime)
-                ->whereDate('created_at', '<=', $endTime)
-                ->whereTime('created_at', '<', '12:00:00')
-                ->whereTime('created_at', '>', $workingAt)
-                ->selectRaw('DATE(created_at) as date,COUNT(*) as value')
+                ->whereDate('time', '>=', $startTime)
+                ->whereDate('time', '<=', $endTime)
+                ->whereTime('time', '<', '12:00:00')
+                ->whereTime('time', '>', $workingAt)
+                ->selectRaw('DATE(time) as date,COUNT(*) as value')
                 ->groupBy('date')
                 ->get();
             $userRecord->lateCount = count($userRecord->lateCount); //迟到次数
@@ -67,10 +67,10 @@ class UserRecordsExport implements FromView
             $over = date('H:i:s', strtotime("+1 hours", strtotime($endAt)));  //开始算加班时间（下班时间一小时以后开始算加班）
             //加班次数
             $overtimeCounts = $userRecord->user_records()
-                ->whereDate('created_at', '>=', $startTime)
-                ->whereDate('created_at', '<=', $endTime)
-                ->whereTime('created_at', '>=', $over)
-                ->selectRaw('DATE(created_at) as date,COUNT(*) as value')
+                ->whereDate('time', '>=', $startTime)
+                ->whereDate('time', '<=', $endTime)
+                ->whereTime('time', '>=', $over)
+                ->selectRaw('DATE(time) as date,COUNT(*) as value')
                 ->groupBy('date')->get();
 
             $overTimes = 0; //加班时长
@@ -80,11 +80,11 @@ class UserRecordsExport implements FromView
                 ->whereTime('created_at', '>=', $over)->get();*/
             foreach ($overtimeCounts as $overtimeCount) {
                 $userOvertime = $userRecord->user_records()
-                    ->whereDate('created_at', $overtimeCount['date'])
-                    ->orderBy('created_at', 'desc')
+                    ->whereDate('time', $overtimeCount['date'])
+                    ->orderBy('time', 'desc')
                     ->first();
 
-                $min = (strtotime(date('H:i:00', strtotime($userOvertime->created_at))) - strtotime($endAt)) / 60;
+                $min = (strtotime(date('H:i:00', strtotime($userOvertime->time))) - strtotime($endAt)) / 60;
                 $overTimes = $overTimes + $min;
             }
             //加班时长

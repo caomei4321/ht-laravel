@@ -30,29 +30,29 @@ class DetailRecordExport implements FromView
 
         foreach ($userRecords as $userRecord) {
             $work_at = $userRecord->user_records()
-                ->whereDate('created_at', '=', $searchDate)
-                ->whereTime('created_at', '<', '12:00:00')
+                ->whereDate('time', '=', $searchDate)
+                ->whereTime('time', '<', '12:00:00')
                 ->first();
 
             if (isset($work_at)) {
-                $userRecord->work_at = $work_at->created_at;  //上班打卡时间
+                $userRecord->work_at = $work_at->time;  //上班打卡时间
             } else {
                 $userRecord->work_at = '';
             }
 
             $endwork_at = $userRecord->user_records()
-                ->whereDate('created_at', '=', $searchDate)
-                ->whereTime('created_at', '>', '13:00:00')
-                ->orderBy('created_at','desc')
+                ->whereDate('time', '=', $searchDate)
+                ->whereTime('time', '>', '13:00:00')
+                ->orderBy('time','desc')
                 ->first();
             if (isset($endwork_at)) {
-                $userRecord->endwork_at = $endwork_at->created_at; //下班打卡时间
+                $userRecord->endwork_at = $endwork_at->time; //下班打卡时间
 
                 $department = $userRecord->department()->first();
 
                 //计算加班时长
                 $endAt = $department['end_at'];  //用户所在部门的下班时间
-                $min = (strtotime(date('H:i:00', strtotime($endwork_at->created_at))) - strtotime($endAt)) / 60;
+                $min = (strtotime(date('H:i:00', strtotime($endwork_at->time))) - strtotime($endAt)) / 60;
 
                 $userRecord->overTime = $min>0 ? $min : 0; //加班时长
             } else {

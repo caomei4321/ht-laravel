@@ -98,7 +98,7 @@
                                 <td>{{ $userRecord->id }}</td>
                                 <td>{{ $userRecord->job_number }}</td>
                                 <td>{{ $userRecord->license }}</td>
-                                <td>{{ $userRecord->created_at }}</td>
+                                <td>{{ $userRecord->time }}</td>
                             </tr>
                         @endforeach
                         </tbody>

@@ -115,7 +115,7 @@
                             <td>{{ $userRecord->user['name'] }}</td>
                             <td>{{ $userRecord->job_number }}</td>
                             <td>{{ $userRecord->license }}</td>
-                            <td>{{ $userRecord->created_at }}</td>
+                            <td>{{ $userRecord->time }}</td>
                             <td class="center">
                                 {{--<a href="{{ route('userRecord.edit',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
                                 <a href="{{ route('userRecord.show',['userRecord' => $userRecord->id]) }}"><button type="button" class="btn btn-danger btn-xs">查看</button></a>--}}

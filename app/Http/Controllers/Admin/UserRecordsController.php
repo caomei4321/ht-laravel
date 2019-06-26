@@ -54,22 +54,22 @@ class UserRecordsController extends Controller
         //$userRecords = $userRecord->whereDate('created_at', Carbon::today())->paginate(1);
         if ($times == 1) { //查询上午打卡记录
             $userRecords = $userRecord->whereIn('user_id', $users)
-                ->whereDate('created_at', '>=', $start_time)
-                ->whereDate('created_at', '<=', $end_time)
+                ->whereDate('time', '>=', $start_time)
+                ->whereDate('time', '<=', $end_time)
                 ->where('job_number', 'like', '%' . $job_number . '%')
-                ->whereTime('created_at', '<=', '12:00:00')
+                ->whereTime('time', '<=', '12:00:00')
                 ->paginate();
         } elseif ($times == 2) {  //查询下午打卡记录
             $userRecords = $userRecord->whereIn('user_id', $users)
-                ->whereDate('created_at', '>=', $start_time)
-                ->whereDate('created_at', '<=', $end_time)
+                ->whereDate('time', '>=', $start_time)
+                ->whereDate('time', '<=', $end_time)
                 ->where('job_number', 'like', '%' . $job_number . '%')
-                ->whereTime('created_at', '>', '12:00:00')
+                ->whereTime('time', '>', '12:00:00')
                 ->paginate();
         } else {
             $userRecords = $userRecord->whereIn('user_id', $users)
-                ->whereDate('created_at', '>=', $start_time)
-                ->whereDate('created_at', '<=', $end_time)
+                ->whereDate('time', '>=', $start_time)
+                ->whereDate('time', '<=', $end_time)
                 ->where('job_number', 'like', '%' . $job_number . '%')
                 ->paginate();
         }
