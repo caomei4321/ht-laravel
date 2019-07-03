@@ -151,7 +151,7 @@
             resize: false,
             auto: true,
             chunked: true,
-            chunkSize: 1024*1024*5,
+            chunkSize: 1024*1024*2,
             threads:1
         });
         uploader.on( 'fileQueued', function( file ) {
