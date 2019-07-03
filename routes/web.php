@@ -27,6 +27,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::post('fileUpload','Admin\FileUploadController@save')->name('admin.fileUpload.save');
+
     Route::get('login', 'Admin\Auth\LoginController@showLoginForm')->name('admin.index');
     Route::post('login', 'Admin\Auth\LoginController@login')->name('admin.login');
     Route::post('logout', 'Admin\Auth\LoginController@logout')->name('admin.logout');
@@ -90,6 +92,16 @@ Route::group(['prefix' => 'admin'], function () {
                 'update' => 'admin.company.update',
                 'show' => 'admin.company.show',
                 'edit' => 'admin.company.edit',
+            ]);
+            //Route::get('version', 'Admin\VersionController@index')->name('version.index');
+            Route::resource('version', 'Admin\VersionController')->names([
+                'index' => 'admin.version.index',
+                'store' => 'admin.version.store',
+                'create' => 'admin.version.create',
+                'destroy' => 'admin.version.destroy',
+                'update' => 'admin.version.update',
+                'show' => 'admin.version.show',
+                'edit' => 'admin.version.edit',
             ]);
         });
     });

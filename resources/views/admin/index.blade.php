@@ -111,6 +111,9 @@
                     <a class="J_menuItem" href="{{ route('admin.company.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">公司管理</span></a>
                 </li>
                 <li>
+                    <a class="J_menuItem" href="{{ route('admin.version.index') }}"><i class="fa fa-columns"></i> <span class="nav-label">版本管理</span></a>
+                </li>
+                <li>
                     <a href="#"><i class="fa fa-table"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li><a class="J_menuItem" href="{{ route('admin.administrators.index') }}">管理员</a>
