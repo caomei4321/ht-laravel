@@ -51,11 +51,20 @@ class IndexController extends Controller
 
     public function common(User $user,UserRecord $userRecord)
     {
+        if (Auth::user()->hasRole('administrator')) {
+            $users = $user->all();
+        }
+        if (Auth::user()->hasRole('company_manage')) {
+            $users = Auth::user()->company->users;
+        }
+        //return Auth::user()->company->users->count();
         //公司员工数量
-        $user_count = $user->all()->count();
+        //$user_count = $user->all()->count();
+        $user_count = $users->count();
         //dd(Carbon::now()->startOfMonth());
         //本月新增员工
-        $new_user_count = $user->whereDate('created_at','>=',Carbon::now()->startOfMonth())->count();
+        //$new_user_count = $user->whereDate('created_at','>=',Carbon::now()->startOfMonth())->count();
+        $new_user_count = $users->where('created_at','>=',Carbon::now()->startOfMonth())->count();
         //本月迟到次数
         $late_user_count = $userRecord->whereDate('created_at','>=',Carbon::now()->startOfMonth())
                                         ->whereTime('created_at','>',Auth::user()->working_at)
@@ -64,12 +73,14 @@ class IndexController extends Controller
 
         //当天打上班卡人数
         $today_start_record = $userRecord->select(DB::raw('count(*) as user_count, user_id'))
+                                         ->whereIn('user_id',$users->pluck('id'))
                                          ->whereDate('created_at',Carbon::today())
                                          ->whereTime('created_at','<','12:00:00')
                                          ->groupBy('user_id')
                                          ->get()->count();
         //下班卡人数
         $today_end_record = $userRecord->select(DB::raw('count(*) as user_count, user_id'))
+                                        ->whereIn('user_id',$users->pluck('id'))
                                         ->whereDate('created_at',Carbon::today())
                                         ->whereTime('created_at','>','12:00:00')
                                         ->groupBy('user_id')
@@ -77,6 +88,7 @@ class IndexController extends Controller
 
         //当天迟到人数
         $today_late_user = $userRecord->select(DB::raw('count(*) as user_count, user_id'))
+                                        ->whereIn('user_id',$users->pluck('id'))
                                         ->whereDate('created_at',Carbon::today())
                                         ->whereTime('created_at','>',Auth::user()->woking_at)
                                         ->whereTime('created_at','<','12:00:00')
