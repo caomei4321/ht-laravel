@@ -36,6 +36,9 @@ class FileUploadController extends Controller
         if (count($files) == $request->chunks) {
             sort($files);
 
+            if (!directoryExists(public_path() . '/uploads/android_version')) {
+                mkdir(public_path() . '/uploads/android_version', 0777,true);
+            }
             // 完整文件存储地址
 //            $fp = public_path() . '/uploads/android_version/' . $request->name;
 
