@@ -36,6 +36,7 @@ class FileUploadController extends Controller
         if (count($files) == $request->chunks) {
             sort($files);
 
+            // 目录不存在则创建目录
             if (!is_dir(public_path() . '/uploads/android_version')) {
                 mkdir(public_path() . '/uploads/android_version', 0777,true);
             }
@@ -58,15 +59,14 @@ class FileUploadController extends Controller
                 //unset($handle);
             }
             fclose($fp);
-            //Storage::deleteDirectory($files);
+            Storage::deleteDirectory($files);
+            return response()->json(['status' => 1, 'data' => '上传完成', 'address' => config('app.url').'/uploads/android_version/' . $request->name]);
         }
         //return $request->name;
         //$file_path = public_path().'/uploads/android_version/'.date("Ym/d",time());
 
         //$file = $request->file;
         //$file->move($file_path,$request->name);
-
-        return count($files);
-        return response()->json(['success' => 1, 'data' => 333]);
+        return response()->json(['status' => 2, 'data' => '上传中']);
     }
 }

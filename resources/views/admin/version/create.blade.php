@@ -88,6 +88,7 @@
                                 </div>
                             </div>
                         </div>
+                        <input type="hidden" id="file_address" name="file_address" value="">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
@@ -151,7 +152,7 @@
             resize: false,
             auto: true,
             chunked: true,
-            chunkSize: 1024*1024*1,
+            chunkSize: 1024*1024*2,
             threads:1
         });
         uploader.on( 'fileQueued', function( file ) {
@@ -179,29 +180,33 @@
         });
 
         uploader.on( 'uploadAccept', function ( file, response) {
+            if (response.status == 1) { //1表示上传完成
+                $( '#'+file.id ).addClass('upload-state-done');
+                $('#file_address').val(response.address);
+            }
             console.log(response);
         })
 
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
-        uploader.on( 'uploadSuccess', function( file ) {
+        /*uploader.on( 'uploadSuccess', function( file ) {
             $( '#'+file.id ).addClass('upload-state-done');
-        });
+        });*/
 
         // 上传失败
-        uploader.on('uploadError', function(file) {
+        /*uploader.on('uploadError', function(file) {
             console.log(file);
             // alert('上传失败');
-        });
+        });*/
 
         // 上传完成（不论成功或失败都会执行）
-        uploader.on( 'uploadComplete', function( file ) {
+        /*uploader.on( 'uploadComplete', function( file ) {
             console.log(file);
-        });
+        });*/
 
         // 上传错误
-        uploader.on('error', function(status) {
+        /*uploader.on('error', function(status) {
             console.log(status);
-            /*var errorTxt = '';
+            var errorTxt = '';
             if(status == 'Q_TYPE_DENIED') {
                 errorTxt = '文件类型错误';
             } else if(status == 'Q_EXCEED_SIZE_LIMIT') {
@@ -209,8 +214,8 @@
             } else {
                 errorTxt = '其他错误';
             }
-            alert('提示:'+ errorTxt);*/
-        });
+            alert('提示:'+ errorTxt);
+        });*/
 
         $('.fancybox').fancybox({
             openEffect: 'none',
