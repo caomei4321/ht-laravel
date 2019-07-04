@@ -59,7 +59,7 @@ class FileUploadController extends Controller
                 //unset($handle);
             }
             fclose($fp);
-            Storage::deleteDirectory($files);
+            Storage::deleteDirectory($tmp_file_path);
             return response()->json(['status' => 1, 'data' => '上传完成', 'address' => config('app.url').'/uploads/android_version/' . $request->name]);
         }
         //return $request->name;
