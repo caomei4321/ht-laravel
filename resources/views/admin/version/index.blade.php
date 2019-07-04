@@ -63,6 +63,7 @@
                             <th>版本号</th>
                             <th>下载地址</th>
                             <th>版本描述</th>
+                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -74,10 +75,9 @@
                             <td>{{ $version->version_number }}</td>
                             <td>{{ $version->version_url }}</td>
                             <td>{{ $version->description }}</td>
+                            <td>{{ $version->created_at }}</td>
                             <td class="center">
-                                <a href=""><button type="button" class="btn btn-primary btn-xs">编辑</button></a>
-                                <a href=""><button type="button" class="btn btn-danger btn-xs">查看</button></a>
-                                <button class="btn btn-warning btn-xs delete" data-id="">删除</button>
+                                <button class="btn btn-warning btn-xs delete" data-id="{{ $version->id }}">删除</button>
                             </td>
                         </tr>
                         @endforeach
@@ -89,6 +89,7 @@
                             <th>版本号</th>
                             <th>下载地址</th>
                             <th>版本描述</th>
+                            <th>添加时间</th>
                             <th>操作</th>
                         </tr>
                         </tfoot>
@@ -136,9 +137,8 @@
             $.ajaxSetup({
                 headers:{'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                 type:"delete",
-                url: '/admin/user/'+id,
+                url: '/admin/version/'+id,
                 success:function (res) {
-                    console.log(res)
                     if (res.status = 1) {
                         swal("删除成功！", "您已经永久删除了这条信息。", "success");
                         location.reload();

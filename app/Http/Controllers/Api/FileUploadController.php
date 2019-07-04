@@ -10,16 +10,25 @@ class FileUploadController extends Controller
 {
     public function save(Request $request)
     {
-        //return $request->all();
-        //return $request->all();
-        //$file = $request->file;
+        if ($request->chunks) {  //分片上传
+            return $this->chunk($request);
+        } else {
+            $dir = public_path() . '/uploads/android_version/' . date('Ym', time()) . '/' . date('d', time());
+            $file = $request->file;
+            $file->move($dir, $request->name);
+            return response()->json([
+                'status' => 1,
+                'data' => '上传完成',
+                'address' => config('app.url') . '/uploads/android_version/' . date('Ym', time()) . '/' . date('d', time()) . '/' . $request->name
+            ]);
+        }
+    }
 
-        //$file->move(public_path('uploads/android_version'),$request->name);
-
-        //return response()->json(['success' => 1, 'data' => 333]);
-
-        //if ($request->)
-
+    /*
+     * 分片上传
+     * */
+    public function chunk(Request $request)
+    {
         // 文件临时目录
         $tmp_file_path = storage_path('app/tmp/' . md5($request->name));
         //  临时文件名
@@ -27,46 +36,37 @@ class FileUploadController extends Controller
 
         $file = $request->file;
         $file->move($tmp_file_path, $tmp_name);
-        /*Storage::putFileAs(
-            $tmp_file_path, $request->file, $tmp_name
-        );*/
 
         $files = Storage::disk('local')->files('tmp/' . md5($request->name));
-        //return count($files)."====".$request->chunks;
+        // 分片上传完成后开始处理临时目录内的文件
         if (count($files) == $request->chunks) {
             sort($files);
 
             // 目录不存在则创建目录
-            if (!is_dir(public_path() . '/uploads/android_version')) {
-                mkdir(public_path() . '/uploads/android_version', 0777,true);
+            $dir = public_path() . '/uploads/android_version/' . date('Ym', time()) . '/' . date('d', time());
+            if (!is_dir($dir)) {
+                mkdir($dir, 0777, true);
             }
-            // 完整文件存储地址
-//            $fp = public_path() . '/uploads/android_version/' . $request->name;
 
-            $fp = fopen(public_path() . '/uploads/android_version/' . $request->name, "ab");
+            $fp = fopen($dir . '/' . $request->name, "ab");
             foreach ($files as $file) {
                 //return $file;
                 $tempFile = storage_path('app/' . $file);
                 $size = filesize($tempFile);
                 $handle = fopen($tempFile, "rb");
-                fwrite($fp,fread($handle, $size));
+                fwrite($fp, fread($handle, $size));
                 fclose($handle);
-                //$size = 5242880;
-                /*$str = file_get_contents($tempFile);
-                file_put_contents($fp,$str,FILE_APPEND);*/
-                //return $tempFile;
-
-                //unset($handle);
             }
             fclose($fp);
+            // 删除临时文件夹
             Storage::deleteDirectory($tmp_file_path);
-            return response()->json(['status' => 1, 'data' => '上传完成', 'address' => config('app.url').'/uploads/android_version/' . $request->name]);
+            return response()->json([
+                'status' => 1,
+                'data' => '上传完成',
+                'address' => config('app.url') . '/uploads/android_version/' . date('Ym', time()) . '/' . date('d', time()) . '/' . $request->name
+            ]);
         }
-        //return $request->name;
-        //$file_path = public_path().'/uploads/android_version/'.date("Ym/d",time());
 
-        //$file = $request->file;
-        //$file->move($file_path,$request->name);
         return response()->json(['status' => 2, 'data' => '上传中']);
     }
 }

@@ -81,19 +81,17 @@
                                 </div>
                                 <div class="col-xs-3 col-sm-3">
                                     <div id="picker">选择文件</div>
-                                    <div>
-                                        <button id="ctlBtn" class="btn btn-default">开始上传</button>
-                                    </div>
 
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" id="file_address" name="file_address" value="">
+                        <input type="hidden" id="file_address" name="version_url" value="">
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <button class="btn btn-primary" id="add_device">提交</button>
                             </div>
+                            <p>等待文件上传完成后再点击提交</p>
                         </div>
                     </form>
                 </div>
@@ -156,7 +154,7 @@
             threads:1
         });
         uploader.on( 'fileQueued', function( file ) {
-            $('#thelist').append( '<div id="' + file.id + '" class="col-xs-3">' +
+            $('#thelist').append( '<div id="' + file.id + '" class="col-xs-9">' +
                 '<h1>' + file.name + '</h1>' +
                 '<p>上传中....</p>' +
                 '</div>' );
@@ -181,11 +179,14 @@
 
         uploader.on( 'uploadAccept', function ( file, response) {
             if (response.status == 1) { //1表示上传完成
-                $( '#'+file.id ).addClass('upload-state-done');
+                $( '#'+file.file.id ).addClass('upload-state-done');
+                $( '#'+file.file.id ).find('p').text('上传完成');
                 $('#file_address').val(response.address);
             }
-            console.log(response);
-        })
+            if (response.status != 1 && response.status != 2) {
+                $( '#'+file.file.id ).find('p').text('上传失败');
+            }
+        });
 
         // 文件上传成功，给item添加成功class, 用样式标记上传成功。
         /*uploader.on( 'uploadSuccess', function( file ) {

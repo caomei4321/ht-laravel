@@ -19,13 +19,19 @@ class VersionController extends Controller
         return view('admin.version.create', compact('version'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Version $version)
     {
-        dd($request->all());
+        $version->fill($request->only(['name', 'version_number', 'version_url', 'description']));
+        $version->save();
+        return redirect()->route('admin.version.index');
     }
 
-    public function fileUpload()
+    public function destroy(Version $version)
     {
-
+        $version->delete();
+        return response()->json([
+            'status' => 1,
+            'msg' => '删除成功'
+        ]);
     }
 }
