@@ -10,6 +10,9 @@ class VersionsController extends Controller
     public function version(Version $version)
     {
         $data = $version->limit(1)->orderBy('created_at','desc')->get();
-        return $data;
+        return $this->response->array([
+            'data' => $data,
+            'success' => 1
+        ]);
     }
 }
