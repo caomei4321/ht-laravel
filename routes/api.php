@@ -75,4 +75,6 @@ $api->version('v1', [
     $api->get('carRecord', 'CarsController@carRecord');  // 车辆统计
 
     $api->post('fileUpload','FileUploadController@save')->name('api.fileUpload.save');
+
+    $api->get('version','VersionsController@version');
 });
