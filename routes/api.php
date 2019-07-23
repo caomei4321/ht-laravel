@@ -26,7 +26,7 @@ $api->version('v1', [
     $api->get('companyUsers', 'UsersController@companyUsers');  //公司员工信息接口
     $api->post('userRecord', 'UsersController@userRecord');  //打卡接口
 
-    $api->post('test', 'UsersController@test');
+    //$api->post('test', 'UsersController@test');
     // 登录
     $api->post('authorizations', 'AuthorizationsController@store')
         ->name('api.authorizations.store');
@@ -77,4 +77,6 @@ $api->version('v1', [
     $api->post('fileUpload','FileUploadController@save')->name('api.fileUpload.save');
 
     $api->get('version','VersionsController@version');
+
+    $api->get('test','TestController@test');
 });
