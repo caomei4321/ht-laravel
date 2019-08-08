@@ -79,4 +79,6 @@ $api->version('v1', [
     $api->get('version','VersionsController@version');
 
     $api->get('test','TestController@test');
+
+    $api->post('alarmStore','AlarmsController@alarmStore');
 });
