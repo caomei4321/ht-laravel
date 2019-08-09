@@ -13,7 +13,7 @@ class AlarmsController extends Controller
 
         $data = [
             'alarm_id'      => $request->alarmId,
-            'alarm_name'    => $request->alarmName,
+            'channel_name'    => $request->channelName,
             'alarm_type'    => $request->alarmType,
             'alarm_start'   => $request->alarmStart,
             'device_serial' => $request->deviceSerial,
