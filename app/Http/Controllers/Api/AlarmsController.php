@@ -46,11 +46,9 @@ class AlarmsController extends Controller
         $helmetData = $request->data;
 
         foreach ($helmetData as $value) {
-
-            $helmetAlarm->helmet()->save($helmet->fill($value));
+            $data = new Helmet($value);
+            $helmetAlarm->helmets()->save($data);
         }
-
-        //$helmetAlarm->helmet()->
 
         return response()->json([
             'msg'    => '上传成功',

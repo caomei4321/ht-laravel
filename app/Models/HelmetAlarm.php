@@ -10,7 +10,7 @@ class HelmetAlarm extends Model
         'device_id', 'alarm_time', 'alarm_pic_url', 'sum'
     ];
 
-    public function helmet()
+    public function helmets()
     {
         return $this->hasMany(Helmet::class,'parent_id','id');
     }
