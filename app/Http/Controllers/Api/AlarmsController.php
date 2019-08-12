@@ -6,6 +6,7 @@ use App\Models\Alarm;
 use App\Models\Helmet;
 use Illuminate\Http\Request;
 use App\Models\HelmetAlarm;
+use Illuminate\Support\Facades\Storage;
 
 class AlarmsController extends Controller
 {
@@ -32,12 +33,23 @@ class AlarmsController extends Controller
 
     public function helmetAlarm(Request $request, HelmetAlarm $helmetAlarm, Helmet $helmet)
     {
-        //return $request->all();
+        $imgdata = $request->url;
+        //$base64_str = substr($imgdata, strpos($imgdata, ",") + 1);
+        $image = base64_decode($imgdata);
+
+        $imgname = $request->deviceId.time($request->alarmTime). '.jpg';
+
+        Storage::disk('public')->put('helmet/'.$imgname,$image);
+
+        $url = env('APP_URL') . '/uploads/images/users/' . 'helmet/'.$imgname;
+
+        /*Storage::disk('public')->put($imgname, $image);
+        $data['image'] = env('APP_URL') . '/uploads/images/hel/' . $imgname;*/
 
         $data = [
             'device_id'     => $request->deviceId,
             'alarm_time'    => $request->alarmTime,
-            'alarm_pic_url' => $request->url,
+            'alarm_pic_url' => $url,
             'sum'           => $request->sum
         ];
         $helmetAlarm->fill($data);
