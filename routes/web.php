@@ -56,6 +56,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('recordReport/download/','Admin\RecordReportController@recordReportDownload')->name('report.download');
         Route::get('detailReport','Admin\RecordReportController@detailReport')->name('report.detailReport');
         Route::get('detailReport/download/','Admin\RecordReportController@detailReportDownload')->name('report.detailReportDownload');
+
+
         Route::group(['middleware' => ['role:administrator']], function () {
             Route::resource('/administrators', 'Admin\AdministratorsController')->names([
                 'index' => 'admin.administrators.index',
@@ -103,6 +105,11 @@ Route::group(['prefix' => 'admin'], function () {
                 'show' => 'admin.version.show',
                 'edit' => 'admin.version.edit',
             ]);
+
+            Route::get('alarm','Admin\AlarmController@index')->name('admin.alarm.index');   //警报列表（唐）
+            Route::delete('alarm/{alarm}','Admin\AlarmController@destroy')->name('admin.alarm.delete');   //删除警报信息（唐）
+            Route::get('helmetAlarm','Admin\HelmetAlarmController@index')->name('admin.helmetAlarm.index');   //警报列表（邵）
+            Route::delete('helmetAlarm/{helmetAlarm}','Admin\HelmetAlarmController@destroy')->name('admin.alarm.delete');   //删除警报信息（唐）
         });
     });
 });
