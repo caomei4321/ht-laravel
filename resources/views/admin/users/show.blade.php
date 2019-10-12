@@ -20,6 +20,8 @@
     <link href="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.css') }}" rel="stylesheet">
     <!-- Data Tables -->
     <link href="{{ asset('assets/admin/css/plugins/dataTables/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <!-- Data picker -->
+    <link href="{{ asset('assets/admin/css/plugins/datapicker/datepicker3.css') }}" rel="stylesheet">
 
 </head>
 
@@ -83,6 +85,25 @@
                     <h3>打卡记录</h3>
                     {{--<a href="{{ route('device.map') }}"><button class="btn btn-info " type="button"><i class="fa fa-paste"></i> 设备位置分布</button>--}}
                     {{--</a>--}}
+                    <button class="btn btn-info " id="download" type="button"><i class="fa fa-paste"></i> 下载excel</button>
+                    <form id="form" method="get" action="">
+                        <div class="form-group form-inline row text-left" id="data_5">
+                            <label class="font-noraml">范围选择</label>
+                            {{ csrf_field() }}
+                            <div class="input-daterange input-group" id="datepicker">
+
+                                <input type="text" class="input-sm form-control" name="start_time" value="{{ isset($filter['start_time']) ? $filter['start_time'] : date("Y-m-d",time()) }}" />
+                                <span class="input-group-addon">到</span>
+                                <input type="text" class="input-sm form-control" name="end_time" value="{{ isset($filter['end_time']) ? $filter['end_time'] : date("Y-m-d",time()) }}" />
+
+                            </div>
+                            <div class="form-group">
+
+                                <input type="submit" class="btn btn-primary" id="search" value="搜索">
+                            </div>
+
+                        </div>
+                    </form>
                     <table class="table table-striped table-bordered table-hover dataTables-example">
                         <thead>
                         <tr>
@@ -129,31 +150,48 @@
 <script src="{{ asset('assets/admin/js/content.js?v=1.0.0') }}"></script>
 <!-- Fancy box -->
 <script src="{{ asset('assets/admin/js/plugins/fancybox/jquery.fancybox.js') }}"></script>
+<!-- Data picker -->
+<script src="{{ asset('assets/admin/js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
 
 <!-- ECharts demo data -->
 {{--<script src="{{ asset('assets/admin/js/demo/echarts-demo.js') }}"></script>--}}
 
 <script>
     $(document).ready(function () {
-        /*$("#add_device").onclick(function () {
-            var data = {
-                'name': $("#name").value,
-                'device_no': $("#device_no").value,
-                'address': $("#address").value,
-                'remark' :$("#remark").value
-            };
-            console.log(data);
-        })*/
-        $('.fancybox').fancybox({
-            openEffect: 'none',
-            closeEffect: 'none'
-        });
+        $('#datepicker').datepicker();
+        var config = {
+            '.chosen-select': {},
+            '.chosen-select-deselect': {
+                allow_single_deselect: true
+            },
+            '.chosen-select-no-single': {
+                disable_search_threshold: 10
+            },
+            '.chosen-select-no-results': {
+                no_results_text: 'Oops, nothing found!'
+            },
+            '.chosen-select-width': {
+                width: "95%"
+            }
+        };
         $('.dataTables-example').dataTable({
             "lengthChange": false,
             "paging": false,
             "order": [[ 3, 'desc' ]],
         });
-    });
+        $('.fancybox').fancybox({
+            openEffect: 'none',
+            closeEffect: 'none'
+        });
+        $('#download').click(function () {
+            $("#form").attr('action',"{{ route('report.userRecordDownload',['id' => $user->id]) }}");
+            $("#form").submit();
+        });
+        $('#search').click(function () {
+            $("#form").attr('action',"{{ route('report.userRecordReport',['id'  => $user->id]) }}");
+            $("#form").submit();
+        })
+    })
 </script>
 
 

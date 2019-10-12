@@ -11,6 +11,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Handlers\ImageUploadHandler;
 use App\Http\Requests\Admin\UserRequest;
+use Maatwebsite\Excel\Excel;
+use App\Exports\RecordsExport;
 
 class UsersController extends Controller
 {
@@ -133,5 +135,32 @@ class UsersController extends Controller
     {
         $user->delete();
         return response()->json(['status' => 1, 'message' => '删除成功']);
+    }
+
+    public function userRecord(Request $request, User $user)
+    {
+        $startTime = $request->start_time ? $request->start_time : date('Y-m-01', strtotime(date("Y-m-d")));
+        $endTime = $request->end_time ? $request->end_time : date('Y-m-d', time());
+
+        $filter['start_time'] = $startTime;
+        $filter['end_time'] = $endTime;
+        $user_records = $user->user_records()->whereDate('time', '>=', $startTime)
+                            ->whereDate('time', '<=', $endTime)
+                            ->orderBy('id', 'desc')
+                            ->get();
+        return view('admin.users.show', [
+            'user' => $user,
+            'filter' => $filter,
+            'userRecords' => $user_records
+        ]);
+    }
+
+    public function userRecordDownload(Request $request, User $user, Excel $excel)
+    {
+        $startTime = $request->start_time ? $request->start_time : date('Y-m-01', strtotime(date("Y-m-d")));
+        $endTime = $request->end_time ? $request->end_time : date('Y-m-d', time());
+
+        return $excel->download(new recordsExport($startTime, $endTime, $user), '打卡记录.xlsx');
+
     }
 }
