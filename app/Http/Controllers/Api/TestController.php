@@ -10,6 +10,24 @@ class TestController extends Controller
 {
     public function test(Request $request)
     {
-        return $request->all();
+        $request = $request->all();
+        $tetsTxt = '2020119.txt';
+        $filePath = storage_path('app/test');
+
+        if (!is_dir(public_path() . '/test')) {
+            mkdir(public_path() . '/test', 0777, true);
+        }
+
+        $fp = fopen(public_path() . '/test/test.txt',"ab");
+
+        //$size = strlen(json_encode($request));
+
+        fwrite($fp,json_encode($request));
+        fclose($fp);
+
+        return 1111;
+
+
+
     }
 }
