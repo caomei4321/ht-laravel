@@ -78,7 +78,7 @@ $api->version('v1', [
 
     $api->get('version','VersionsController@version');
 
-    $api->get('test','TestController@test');
+    $api->any('test','TestController@test');
 
     $api->post('alarm','AlarmsController@alarm');
 
