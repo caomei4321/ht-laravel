@@ -52,6 +52,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('license/update', 'Admin\LicenseController@update')->name('license.update');
         Route::delete('license/{license}', 'Admin\LicenseController@delete')->name('license.delete');
 
+        // 车牌识别记录
+        Route::get('carRecord', 'Admin\CarRecordController@index')->name('carRecord.search');
+        Route::delete('carRecord/{carRecord}', 'Admin\CarRecordController@delete')->name('carRecord.delete');
+
         Route::get('recordReport','Admin\RecordReportController@recordReport')->name('report.recordReport');
         Route::get('recordReport/download/','Admin\RecordReportController@recordReportDownload')->name('report.download');
         Route::get('detailReport','Admin\RecordReportController@detailReport')->name('report.detailReport');
