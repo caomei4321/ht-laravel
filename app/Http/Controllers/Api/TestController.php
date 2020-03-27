@@ -10,7 +10,8 @@ class TestController extends Controller
 {
     public function test(Request $request)
     {
-        $request = $request->all();
+        $request = file_get_contents('php://input');
+        //$request = $request->all();
         $tetsTxt = '2020119.txt';
         $filePath = storage_path('app/test');
 
